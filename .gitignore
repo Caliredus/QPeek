@@ -1,5 +1,5 @@
 # Rust / derleme çıktıları
-/target/
+target/
 /dist/
 
 # Editör ve işletim sistemi

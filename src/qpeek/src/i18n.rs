@@ -1,0 +1,298 @@
+//! Türkçe / İngilizce dil desteği (`TR` / `EN`).
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+pub enum Lang {
+    #[default]
+    Tr,
+    En,
+}
+
+impl Lang {
+    pub fn as_code(self) -> &'static str {
+        match self {
+            Lang::Tr => "tr",
+            Lang::En => "en",
+        }
+    }
+
+    pub fn from_code(s: &str) -> Self {
+        match s.trim().to_ascii_lowercase().as_str() {
+            "en" => Lang::En,
+            _ => Lang::Tr,
+        }
+    }
+
+    pub fn is_en(self) -> bool {
+        self == Lang::En
+    }
+}
+
+/// Arayüzde kullanılan sabit metinler (Slint global/özelliklerine aktarılır).
+pub struct UiTexts {
+    pub settings: &'static str,
+    pub general: &'static str,
+    pub providers_tab: &'static str,
+    pub manage_providers_title: &'static str,
+    pub manage_providers_sub: &'static str,
+    pub search_placeholder: &'static str,
+    pub filter_all: &'static str,
+    pub filter_connected: &'static str,
+    pub no_search_results: &'static str,
+    pub accounts_section: &'static str,
+    pub connected_badge: &'static str,
+    pub auth_multi_account: &'static str,
+    pub auth_local_account: &'static str,
+    pub auth_api_key: &'static str,
+    pub auth_optional_key: &'static str,
+    pub auth_auto_detect: &'static str,
+    pub api_key_section: &'static str,
+    pub optional_api_key_section: &'static str,
+    pub update_key_btn: &'static str,
+    pub auto_detect_desc: &'static str,
+    pub autostart: &'static str,
+    pub notifications: &'static str,
+    pub test_btn: &'static str,
+    pub language: &'static str,
+    pub design_language: &'static str,
+    pub theme_obsidian: &'static str,
+    pub theme_paper: &'static str,
+    pub theme_brutalist: &'static str,
+    pub theme_terminal: &'static str,
+    pub theme_nordic: &'static str,
+    pub theme_hint: &'static str,
+    pub hotkey_label: &'static str,
+    pub shortcuts_title: &'static str,
+    pub shortcut_refresh: &'static str,
+    pub shortcut_refresh_keys: &'static str,
+    pub shortcut_close: &'static str,
+    pub shortcut_close_keys: &'static str,
+    pub shortcut_switch: &'static str,
+    pub shortcut_switch_keys: &'static str,
+    pub limits_title: &'static str,
+    pub cost_tab: &'static str,
+    pub cost_total: &'static str,
+    pub cost_sessions: &'static str,
+    pub cost_tokens: &'static str,
+    pub cost_loading: &'static str,
+    pub cost_empty: &'static str,
+    pub cost_note: &'static str,
+    pub cost_1d: &'static str,
+    pub cost_7d: &'static str,
+    pub cost_30d: &'static str,
+    pub cost_daily_title: &'static str,
+    pub cost_models_title: &'static str,
+    pub activation_title: &'static str,
+    pub activation_master: &'static str,
+    pub activation_mode_reset: &'static str,
+    pub activation_mode_schedule: &'static str,
+    pub activation_start_time: &'static str,
+    pub activation_quiet_hours: &'static str,
+    pub activation_account_toggle: &'static str,
+    pub activation_follow_master: &'static str,
+    pub activation_start_now: &'static str,
+    pub activation_hint: &'static str,
+    pub used_suffix: &'static str,
+    pub no_metrics: &'static str,
+    pub remove_btn: &'static str,
+    pub connect_btn: &'static str,
+    pub add_account_btn: &'static str,
+    pub save_key_btn: &'static str,
+    pub api_key_placeholder: &'static str,
+    pub loading_accounts: &'static str,
+    pub settings_footer: &'static str,
+    pub app_settings_footer: &'static str,
+    pub about_desc: &'static str,
+    pub about_title: &'static str,
+}
+
+pub fn ui_texts(lang: Lang) -> UiTexts {
+    match lang {
+        Lang::Tr => UiTexts {
+            settings: "Ayarlar",
+            general: "Genel",
+            providers_tab: "Sağlayıcılar",
+            manage_providers_title: "Sağlayıcıları ve Hesapları Yönet",
+            manage_providers_sub: "Tüm sağlayıcılar · hesap ve API anahtarı ayarları",
+            search_placeholder: "Sağlayıcı ara…",
+            filter_all: "Tümü",
+            filter_connected: "Bağlı",
+            no_search_results: "Eşleşen sağlayıcı yok.",
+            accounts_section: "Hesaplar",
+            connected_badge: "Bağlı",
+            auth_multi_account: "Çoklu Hesap · CLI",
+            auth_local_account: "Yerel Hesap",
+            auth_api_key: "API Anahtarı",
+            auth_optional_key: "Yerel / Opsiyonel API Anahtarı",
+            auth_auto_detect: "Otomatik Algılama",
+            api_key_section: "API Anahtarı",
+            optional_api_key_section: "İsteğe Bağlı API Anahtarı",
+            update_key_btn: "Anahtarı güncelle",
+            auto_detect_desc: "Bu sağlayıcı bilgisayardaki yerel CLI veya tarayıcı oturumundan otomatik okunur. Bağla düğmesine basarak takibi başlatabilirsin.",
+            autostart: "Windows açılışında tepside başlat",
+            notifications: "Kota bildirimleri (%80 / %100 / sıfırlama)",
+            test_btn: "Test",
+            language: "Dil",
+            design_language: "Tasarım dili",
+            theme_obsidian: "Obsidian",
+            theme_paper: "Paper",
+            theme_brutalist: "Brutalist",
+            theme_terminal: "Terminal",
+            theme_nordic: "Nordic",
+            theme_hint: "Tek tıkla tüm pencerelerde uygulanır",
+            hotkey_label: "Hızlı panel kısayolu",
+            shortcuts_title: "Kısayollar ve İpuçları",
+            shortcut_refresh: "Verileri yenile",
+            shortcut_refresh_keys: "Sağ tık / Yenile",
+            shortcut_close: "Paneli kapat / gizle",
+            shortcut_close_keys: "Esc / Dışarı tık",
+            shortcut_switch: "Hesap değiştir",
+            shortcut_switch_keys: "Tekerlek / ‹ ›",
+            limits_title: "Limitler",
+            cost_tab: "Maliyet",
+            cost_total: "Tahmini API Değeri",
+            cost_sessions: "oturum",
+            cost_tokens: "token",
+            cost_loading: "Yerel oturum kayıtları taranıyor…",
+            cost_empty: "Bu aralıkta yerel maliyet kaydı yok.",
+            cost_note: "Yerel Codex ve Claude Code kayıtlarından hesaplanır; abonelik ücreti değil, API karşılığıdır.",
+            cost_1d: "Bugün",
+            cost_7d: "7 Gün",
+            cost_30d: "30 Gün",
+            cost_daily_title: "Günlük Harcama",
+            cost_models_title: "Model Kırılımı",
+            activation_title: "Otomatik 5sa Başlatıcı",
+            activation_master: "Ana zamanlayıcıyı etkinleştir",
+            activation_mode_reset: "Sıfırlanınca",
+            activation_mode_schedule: "Sabit saat",
+            activation_start_time: "Başlatma saati",
+            activation_quiet_hours: "Sessiz saatler",
+            activation_account_toggle: "Otomatik 5sa",
+            activation_follow_master: "Ana plana uy",
+            activation_start_now: "Başlat",
+            activation_hint: "Yalnız 5 saatlik penceresi olan hesaplarda görünür; geçmişe yazmaz.",
+            used_suffix: "kullanıldı",
+            no_metrics: "Metrik verisi yok",
+            remove_btn: "Kaldır",
+            connect_btn: "Bağla",
+            add_account_btn: "+ Hesap bağla",
+            save_key_btn: "Anahtar ile bağla",
+            api_key_placeholder: "API anahtarı yapıştır…",
+            loading_accounts: "Sağlayıcılar okunuyor...",
+            settings_footer: "Değişiklik hemen uygulanır   ·   Esc: Geri",
+            app_settings_footer: "Değişiklik hemen uygulanır   ·   Dışarı tık / Esc: Gizle",
+            about_desc: "Yapay zekâ kullanım limitlerine hızlı bakış.\nSağlayıcı çekirdeği: Win-CodexBar (MIT). QPeek, CodexBar ile bağlantılı değildir.",
+            about_title: "QPeek Hakkında",
+        },
+        Lang::En => UiTexts {
+            settings: "Settings",
+            general: "General",
+            providers_tab: "Providers",
+            manage_providers_title: "Manage Providers & Accounts",
+            manage_providers_sub: "All providers · accounts & API keys",
+            search_placeholder: "Search providers…",
+            filter_all: "All",
+            filter_connected: "Connected",
+            no_search_results: "No matching providers.",
+            accounts_section: "Accounts",
+            connected_badge: "Connected",
+            auth_multi_account: "Multi-account · CLI",
+            auth_local_account: "Local Account",
+            auth_api_key: "API Key",
+            auth_optional_key: "Local / Optional API Key",
+            auth_auto_detect: "Auto-detect",
+            api_key_section: "API Key",
+            optional_api_key_section: "Optional API Key",
+            update_key_btn: "Update key",
+            auto_detect_desc: "This provider is detected automatically from your local CLI or browser session. Click Connect to start tracking.",
+            autostart: "Start in tray on Windows boot",
+            notifications: "Quota alerts (80% / 100% / reset)",
+            test_btn: "Test",
+            language: "Language",
+            design_language: "Design language",
+            theme_obsidian: "Obsidian",
+            theme_paper: "Paper",
+            theme_brutalist: "Brutalist",
+            theme_terminal: "Terminal",
+            theme_nordic: "Nordic",
+            theme_hint: "Applies live across all windows",
+            hotkey_label: "Quick panel shortcut",
+            shortcuts_title: "Shortcuts & Tips",
+            shortcut_refresh: "Refresh data",
+            shortcut_refresh_keys: "Right-click / Refresh",
+            shortcut_close: "Close / hide panel",
+            shortcut_close_keys: "Esc / Click outside",
+            shortcut_switch: "Switch account",
+            shortcut_switch_keys: "Scroll / ‹ ›",
+            limits_title: "Limits",
+            cost_tab: "Cost",
+            cost_total: "Estimated API Value",
+            cost_sessions: "sessions",
+            cost_tokens: "tokens",
+            cost_loading: "Scanning local session logs…",
+            cost_empty: "No local cost data in this period.",
+            cost_note: "Computed from local Codex & Claude Code logs; shows API-equivalent value, not subscription fee.",
+            cost_1d: "Today",
+            cost_7d: "7 Days",
+            cost_30d: "30 Days",
+            cost_daily_title: "Daily Spend",
+            cost_models_title: "By Model",
+            activation_title: "Auto 5h Starter",
+            activation_master: "Enable master scheduler",
+            activation_mode_reset: "On reset",
+            activation_mode_schedule: "Scheduled",
+            activation_start_time: "Start time",
+            activation_quiet_hours: "Quiet hours",
+            activation_account_toggle: "Auto 5h",
+            activation_follow_master: "Follow master",
+            activation_start_now: "Start",
+            activation_hint: "Shown only for accounts with a 5h window; ephemeral, no chat history.",
+            used_suffix: "used",
+            no_metrics: "No metrics available",
+            remove_btn: "Remove",
+            connect_btn: "Connect",
+            add_account_btn: "+ Add account",
+            save_key_btn: "Connect with key",
+            api_key_placeholder: "Paste API key…",
+            loading_accounts: "Loading providers...",
+            settings_footer: "Changes apply immediately   ·   Esc: Back",
+            app_settings_footer: "Changes apply immediately   ·   Click outside / Esc: Hide",
+            about_desc: "Quick peek at AI usage limits.\nProvider core: Win-CodexBar (MIT). QPeek is not affiliated with CodexBar.",
+            about_title: "About QPeek",
+        },
+    }
+}
+
+pub fn menu_open_app(lang: Lang) -> &'static str {
+    match lang {
+        Lang::Tr => "Pencereyi Aç",
+        Lang::En => "Open Window",
+    }
+}
+
+pub fn menu_open_tray(lang: Lang) -> &'static str {
+    match lang {
+        Lang::Tr => "Hızlı Panel (Alt+Shift+Q)",
+        Lang::En => "Quick Panel (Alt+Shift+Q)",
+    }
+}
+
+pub fn menu_refresh(lang: Lang) -> &'static str {
+    match lang {
+        Lang::Tr => "Yenile",
+        Lang::En => "Refresh",
+    }
+}
+
+pub fn menu_about(lang: Lang) -> &'static str {
+    match lang {
+        Lang::Tr => "Hakkında",
+        Lang::En => "About",
+    }
+}
+
+pub fn menu_quit(lang: Lang) -> &'static str {
+    match lang {
+        Lang::Tr => "Çıkış",
+        Lang::En => "Quit",
+    }
+}

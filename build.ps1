@@ -8,7 +8,8 @@
        (Win-CodexBar'ın kendi release betiği de CLI'yi bu şekilde adlandırır).
     3) Çekirdeğin LICENSE ve NOTICE dosyalarını dist/third-party/ altına koyar.
 
-    Arayüz (src/) henüz yok; eklendiğinde bu betiğe ikinci adım olarak girecek.
+    4) src/qpeek arayüzünü (Rust + Slint) derler, dist/QPeek.exe olarak koyar ve
+       arayüz bağımlılıklarının lisanslarını dist/third-party/ altına kopyalar.
 
 .EXAMPLE
     .\build.ps1
@@ -50,5 +51,32 @@ Copy-Item (Join-Path $targetDir "$buildProfile\codexbar.exe") (Join-Path $dist '
 Copy-Item (Join-Path $core 'LICENSE') (Join-Path $dist 'third-party\Win-CodexBar\LICENSE') -Force
 Copy-Item (Join-Path $core 'NOTICE')  (Join-Path $dist 'third-party\Win-CodexBar\NOTICE')  -Force
 
-$exe = Get-Item (Join-Path $dist 'codexbar-cli.exe')
-Write-Host ("==> Tamam: {0} ({1:N1} MB)" -f $exe.FullName, ($exe.Length / 1MB)) -ForegroundColor Green
+$uiManifest = Join-Path $root 'src\qpeek\Cargo.toml'
+Write-Host "==> Arayüz derleniyor ($buildProfile)" -ForegroundColor Cyan
+$uiArgs = @('build', '--manifest-path', $uiManifest, '--target-dir', $targetDir)
+if (-not $DebugBuild) { $uiArgs += '--release' }
+$ErrorActionPreference = 'Continue'
+& cargo @uiArgs
+$ErrorActionPreference = $prevEap
+if ($LASTEXITCODE -ne 0) { throw "Arayüz derlemesi başarısız (çıkış $LASTEXITCODE)" }
+Copy-Item (Join-Path $targetDir "$buildProfile\qpeek.exe") (Join-Path $dist 'QPeek.exe') -Force
+
+# Arayüz bağımlılıklarının lisans metinleri (Slint: Royalty-free 2.0, atıf Hakkında ekranında).
+$ErrorActionPreference = 'Continue'
+$meta = & cargo metadata --format-version 1 --manifest-path $uiManifest 2>$null | ConvertFrom-Json
+$ErrorActionPreference = $prevEap
+foreach ($name in 'slint', 'tray-icon') {
+    $pkg = $meta.packages | Where-Object { $_.name -eq $name } | Select-Object -First 1
+    if (-not $pkg) { continue }
+    $src = Split-Path $pkg.manifest_path
+    $dst = Join-Path $dist "third-party\$name"
+    New-Item -ItemType Directory -Force $dst | Out-Null
+    Get-ChildItem $src -File | Where-Object { $_.Name -match '^(LICEN[CS]E|COPYING)' } | Copy-Item -Destination $dst -Force
+    $licDir = Join-Path $src 'LICENSES'
+    if (Test-Path $licDir) { Copy-Item $licDir -Destination $dst -Recurse -Force }
+}
+
+foreach ($f in 'QPeek.exe', 'codexbar-cli.exe') {
+    $exe = Get-Item (Join-Path $dist $f)
+    Write-Host ("==> Tamam: {0} ({1:N1} MB)" -f $exe.FullName, ($exe.Length / 1MB)) -ForegroundColor Green
+}

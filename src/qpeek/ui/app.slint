@@ -1,0 +1,2737 @@
+import { AboutSlint, Palette } from "std-widgets.slint";
+
+export global Theme {
+    in-out property <bool> is-light: false;
+    in-out property <string> active-theme: "obsidian";
+    in-out property <string> font-family: "Segoe UI";
+    in-out property <length> card-radius: 10px;
+    in-out property <length> control-radius: 7px;
+    in-out property <length> bar-radius: 3px;
+    in-out property <length> bar-height: 6px;
+    in-out property <length> border-w: 1px;
+
+    in-out property <color> bg: #0F1117;
+    in-out property <color> stub-bg: #141824;
+    in-out property <color> notch-bg: #080A0E;
+    in-out property <color> perf-dash: #384158;
+    in-out property <color> card: #181C26;
+    in-out property <color> card-border: #282E3E;
+    in-out property <color> hover-bg: #1F2433;
+    in-out property <color> badge-bg: #202532;
+    in-out property <color> badge-border: #31384B;
+    in-out property <color> track: #252B3B;
+    in-out property <color> monogram-bg: #23293A;
+    in-out property <color> text-primary: #F3F4F6;
+    in-out property <color> text-secondary: #D1D5DB;
+    in-out property <color> text-muted: #9CA3AF;
+    in-out property <color> text-dim: #6B7280;
+    in-out property <color> emerald: #10B981;
+    out property <color> accent: Theme.emerald;
+    in-out property <color> amber: #F59E0B;
+    in-out property <color> coral: #EF4444;
+    in-out property <color> sky: #38BDF8;
+    in-out property <color> active-btn-text: #0F1117;
+}
+
+// Dinamik dil metinleri (TR / EN); Rust tarafından anında güncellenir.
+export global L10n {
+    in-out property <bool> is-en: false;
+    in-out property <string> settings: "Ayarlar";
+    in-out property <string> general: "Genel";
+    in-out property <string> providers-tab: "Sağlayıcılar";
+    in-out property <string> manage-providers-title: "Sağlayıcıları ve Hesapları Yönet";
+    in-out property <string> manage-providers-sub: "Tüm sağlayıcılar · hesap ve API anahtarı ayarları";
+    in-out property <string> search-placeholder: "Sağlayıcı ara…";
+    in-out property <string> filter-all: "Tümü";
+    in-out property <string> filter-connected: "Bağlı";
+    in-out property <string> no-search-results: "Eşleşen sağlayıcı yok.";
+    in-out property <string> accounts-section: "Hesaplar";
+    in-out property <string> connected-badge: "Bağlı";
+    in-out property <string> auth-multi-account: "Çoklu Hesap · CLI";
+    in-out property <string> auth-local-account: "Yerel Hesap";
+    in-out property <string> auth-api-key: "API Anahtarı";
+    in-out property <string> auth-optional-key: "Yerel / Opsiyonel API Anahtarı";
+    in-out property <string> auth-auto-detect: "Otomatik Algılama";
+    in-out property <string> api-key-section: "API Anahtarı";
+    in-out property <string> optional-api-key-section: "İsteğe Bağlı API Anahtarı";
+    in-out property <string> update-key-btn: "Anahtarı güncelle";
+    in-out property <string> auto-detect-desc: "Bu sağlayıcı bilgisayardaki yerel CLI veya tarayıcı oturumundan otomatik okunur. Bağla düğmesine basarak takibi başlatabilirsin.";
+    in-out property <string> autostart: "Windows açılışında tepside başlat";
+    in-out property <string> notifications: "Kota bildirimleri (%80 / %100 / sıfırlama)";
+    in-out property <string> test-btn: "Test";
+    in-out property <string> language: "Dil";
+    in-out property <string> design-language: "Tasarım dili";
+    in-out property <string> theme-obsidian: "Obsidian";
+    in-out property <string> theme-paper: "Paper";
+    in-out property <string> theme-brutalist: "Brutalist";
+    in-out property <string> theme-terminal: "Terminal";
+    in-out property <string> theme-nordic: "Nordic";
+    in-out property <string> theme-hint: "Tek tıkla tüm pencerelerde uygulanır";
+    in-out property <string> hotkey-label: "Hızlı panel kısayolu";
+    in-out property <string> shortcuts-title: "Kısayollar ve İpuçları";
+    in-out property <string> shortcut-refresh: "Verileri yenile";
+    in-out property <string> shortcut-refresh-keys: "Sağ tık / Yenile";
+    in-out property <string> shortcut-close: "Paneli kapat / gizle";
+    in-out property <string> shortcut-close-keys: "Esc / Dışarı tık";
+    in-out property <string> shortcut-switch: "Hesap değiştir";
+    in-out property <string> shortcut-switch-keys: "Tekerlek / ‹ ›";
+    in-out property <string> limits-title: "Limitler";
+    in-out property <string> cost-tab: "Maliyet";
+    in-out property <string> cost-total: "Tahmini API Değeri";
+    in-out property <string> cost-sessions: "oturum";
+    in-out property <string> cost-tokens: "token";
+    in-out property <string> cost-loading: "Yerel oturum kayıtları taranıyor…";
+    in-out property <string> cost-empty: "Bu aralıkta yerel maliyet kaydı yok.";
+    in-out property <string> cost-note: "Yerel Codex ve Claude Code kayıtlarından hesaplanır; abonelik ücreti değil, API karşılığıdır.";
+    in-out property <string> cost-1d: "Bugün";
+    in-out property <string> cost-7d: "7 Gün";
+    in-out property <string> cost-30d: "30 Gün";
+    in-out property <string> cost-daily-title: "Günlük Harcama";
+    in-out property <string> cost-models-title: "Model Kırılımı";
+    in-out property <string> activation-title: "Otomatik 5sa Başlatıcı";
+    in-out property <string> activation-master: "Ana zamanlayıcıyı etkinleştir";
+    in-out property <string> activation-mode-reset: "Sıfırlanınca";
+    in-out property <string> activation-mode-schedule: "Sabit saat";
+    in-out property <string> activation-start-time: "Başlatma saati";
+    in-out property <string> activation-quiet-hours: "Sessiz saatler";
+    in-out property <string> activation-account-toggle: "Otomatik 5sa";
+    in-out property <string> activation-follow-master: "Ana plana uy";
+    in-out property <string> activation-start-now: "Başlat";
+    in-out property <string> activation-hint: "Yalnız 5 saatlik penceresi olan hesaplarda görünür; geçmişe yazmaz.";
+    in-out property <string> used-suffix: "kullanıldı";
+    in-out property <string> no-metrics: "Metrik verisi yok";
+    in-out property <string> remove-btn: "Kaldır";
+    in-out property <string> connect-btn: "Bağla";
+    in-out property <string> add-account-btn: "+ Hesap bağla";
+    in-out property <string> save-key-btn: "Anahtar ile bağla";
+    in-out property <string> api-key-placeholder: "API anahtarı yapıştır…";
+    in-out property <string> loading-accounts: "Sağlayıcılar okunuyor...";
+    in-out property <string> settings-footer: "Değişiklik hemen uygulanır   ·   Esc: Geri";
+    in-out property <string> app-settings-footer: "Değişiklik hemen uygulanır   ·   Dışarı tık / Esc: Gizle";
+    in-out property <string> about-desc: "Yapay zekâ kullanım limitlerine hızlı bakış.\nSağlayıcı çekirdeği: Win-CodexBar (MIT). QPeek, CodexBar ile bağlantılı değildir.";
+    in-out property <string> about-title: "QPeek Hakkında";
+}
+
+export struct Metric {
+    label: string,
+    percent: float,
+    detail: string,
+    info: bool,
+    pace: string,
+    pace-level: int,
+}
+
+export struct AccountSlide {
+    plan: string,
+    email: string,
+    metrics: [Metric],
+}
+
+export struct ProviderCard {
+    id: string,
+    name: string,
+    monogram: string,
+    account-index: int,
+    account-count: int,
+    accent: color,
+    logo: image,
+    has-logo: bool,
+    min-body-height: length,
+    slides: [AccountSlide],
+}
+
+export struct AccountRow {
+    key: string,
+    email: string,
+    connected: bool,
+    has-5h-window: bool,
+    act-enabled: bool,
+    act-follow-master: bool,
+    act-mode: int,
+    act-time: string,
+    act-quiet-enabled: bool,
+    act-quiet-start: string,
+    act-quiet-end: string,
+    act-busy: bool,
+    act-status: string,
+}
+
+export struct ProviderListRow {
+    id: string,
+    name: string,
+    monogram: string,
+    accent: color,
+    logo: image,
+    has-logo: bool,
+    connected: bool,
+    account-count: int,
+    selected: bool,
+}
+
+export struct ProviderDetail {
+    id: string,
+    name: string,
+    monogram: string,
+    accent: color,
+    logo: image,
+    has-logo: bool,
+    connected: bool,
+    accounts: [AccountRow],
+    can-add: bool,
+    api-key-mode: int, // 0 = none, 1 = required, 2 = optional
+    api-env: string,
+    api-help: string,
+    auth-label: string,
+    busy: bool,
+    note: string,
+    note-kind: int, // 0 = muted info, 1 = busy, 2 = error
+}
+
+export struct CostModelRow {
+    model: string,
+    usd-text: string,
+    ratio: float,
+}
+
+export struct CostProviderRow {
+    id: string,
+    name: string,
+    accent: color,
+    logo: image,
+    has-logo: bool,
+    monogram: string,
+    total-text: string,
+    meta-text: string,
+    models: [CostModelRow],
+}
+
+export struct CostDailyRow {
+    label: string,
+    usd-text: string,
+    ratio: float,
+}
+
+component Badge inherits Rectangle {
+    in property <string> text;
+    height: 18px;
+    width: badge-label.preferred-width + 16px;
+    border-radius: Theme.control-radius;
+    background: Theme.badge-bg;
+    border-width: Theme.border-w;
+    border-color: Theme.badge-border;
+    HorizontalLayout {
+        padding-left: 8px;
+        padding-right: 8px;
+        badge-label := Text {
+            text: root.text;
+            font-size: 10.3px;
+            font-weight: 700;
+            color: Theme.text-secondary;
+            vertical-alignment: center;
+        }
+    }
+}
+
+component MetricRow inherits VerticalLayout {
+    in property <Metric> m;
+    property <color> pace-color: root.m.pace-level == 3 ? Theme.coral
+        : root.m.pace-level == 2 ? Theme.amber
+        : root.m.pace-level == 1 ? Theme.emerald : Theme.text-muted;
+    spacing: 4px;
+
+    if !root.m.info: VerticalLayout {
+        spacing: 4px;
+        HorizontalLayout {
+            height: 17px;
+            spacing: 8px;
+            Text {
+                text: root.m.label;
+                font-size: 11.3px;
+                color: Theme.text-secondary;
+                vertical-alignment: center;
+                overflow: elide;
+            }
+            Text {
+                text: (L10n.is-en
+                    ? (Math.round(root.m.percent) + "% " + L10n.used-suffix)
+                    : ("%" + Math.round(root.m.percent) + " " + L10n.used-suffix))
+                    + (root.m.detail != "" ? " · " + root.m.detail : "");
+                font-size: 10.7px;
+                color: Theme.text-muted;
+                horizontal-alignment: right;
+                vertical-alignment: center;
+                overflow: elide;
+            }
+        }
+        Rectangle {
+            height: Theme.bar-height;
+            border-radius: Theme.bar-radius;
+            background: Theme.track;
+            clip: true;
+            if root.m.percent > 0.01: Rectangle {
+                x: 0;
+                width: max(4px, parent.width * clamp(root.m.percent, 0, 100) / 100);
+                height: parent.height;
+                border-radius: Theme.bar-radius;
+                background: root.m.percent >= 80 ? Theme.coral : root.m.percent >= 50 ? Theme.amber : Theme.emerald;
+            }
+        }
+        if root.m.pace != "": HorizontalLayout {
+            alignment: end;
+
+            Rectangle {
+                height: 18px;
+                width: min(parent.width, pace-label.preferred-width + 14px);
+                border-radius: min(self.height / 2, Theme.control-radius);
+                border-width: Theme.border-w;
+                border-color: root.pace-color.with-alpha(0.5);
+                background: root.pace-color.with-alpha(0.12);
+
+                pace-label := Text {
+                    x: 7px;
+                    width: parent.width - 14px;
+                    text: root.m.pace;
+                    font-size: 10.3px;
+                    font-weight: 700;
+                    color: Theme.is-light ? root.pace-color.darker(0.45) : root.pace-color;
+                    vertical-alignment: center;
+                    horizontal-alignment: center;
+                    overflow: elide;
+                }
+            }
+        }
+    }
+
+    if root.m.info: HorizontalLayout {
+        height: 19px;
+        spacing: 8px;
+        Text {
+            text: root.m.label;
+            font-size: 11.3px;
+            color: Theme.text-muted;
+            vertical-alignment: center;
+            overflow: elide;
+        }
+        if root.m.detail != "": VerticalLayout {
+            alignment: center;
+            horizontal-stretch: 0;
+            Badge { text: root.m.detail; }
+        }
+    }
+}
+
+component ArrowButton inherits Rectangle {
+    in property <string> glyph;
+    in property <bool> enabled: true;
+    callback clicked();
+    width: 20px;
+    height: 20px;
+    border-radius: min(self.height / 2, Theme.control-radius);
+    background: ta.has-hover && root.enabled ? Theme.hover-bg : transparent;
+    opacity: root.enabled ? 1.0 : 0.3;
+    Text {
+        text: root.glyph;
+        font-family: "Segoe Fluent Icons";
+        font-size: 9px;
+        color: ta.has-hover && root.enabled ? Theme.text-primary : Theme.text-muted;
+        horizontal-alignment: center;
+        vertical-alignment: center;
+    }
+    ta := TouchArea {
+        enabled: root.enabled;
+        clicked => { root.clicked(); }
+    }
+}
+
+component ProviderIconBadge inherits Rectangle {
+    in property <length> size;
+    in property <image> logo;
+    in property <bool> has-logo;
+    in property <string> monogram;
+    in property <color> accent;
+    in property <length> font-size;
+
+    width: root.size;
+    height: root.size;
+    border-radius: Theme.control-radius;
+    background: root.has-logo ? transparent : Theme.monogram-bg;
+    border-width: root.has-logo ? 0px : Theme.border-w;
+    border-color: Theme.badge-border;
+
+    if root.has-logo: Image {
+        width: root.size * 5 / 9;
+        height: self.width;
+        x: (parent.width - self.width) / 2;
+        y: (parent.height - self.height) / 2;
+        source: root.logo;
+        colorize: root.accent;
+        image-fit: contain;
+    }
+    if !root.has-logo: Text {
+        text: root.monogram;
+        color: root.accent;
+        font-size: root.font-size;
+        font-weight: 700;
+        horizontal-alignment: center;
+        vertical-alignment: center;
+    }
+}
+
+component Card inherits Rectangle {
+    in property <ProviderCard> card;
+    callback switch-account(string, int, bool);
+    callback refresh();
+    border-radius: Theme.card-radius;
+    background: Theme.card;
+    border-width: Theme.border-w;
+    border-color: Theme.card-border;
+
+    if root.card.account-count > 1: TouchArea {
+        pointer-event(ev) => {
+            if ev.kind == PointerEventKind.down && ev.button == PointerEventButton.right {
+                root.refresh();
+            }
+        }
+        scroll-event(ev) => {
+            if ev.delta-y < -1px || ev.delta-x < -1px {
+                root.switch-account(root.card.id, 1, true);
+                return accept;
+            }
+            if ev.delta-y > 1px || ev.delta-x > 1px {
+                root.switch-account(root.card.id, -1, true);
+                return accept;
+            }
+            reject
+        }
+    }
+
+    VerticalLayout {
+        padding-left: 13px;
+        padding-right: 13px;
+        padding-top: 11px;
+        padding-bottom: 11px;
+        spacing: 8px;
+
+        HorizontalLayout {
+            height: 20px;
+            spacing: 8px;
+            VerticalLayout {
+                alignment: center;
+                horizontal-stretch: 0;
+                if root.card.has-logo: Image {
+                    width: 16px;
+                    height: 16px;
+                    source: root.card.logo;
+                    colorize: root.card.accent;
+                }
+                if !root.card.has-logo: ProviderIconBadge {
+                    size: 18px;
+                    monogram: root.card.monogram;
+                    accent: root.card.accent;
+                    font-size: 8.5px;
+                }
+            }
+            Text {
+                text: root.card.name;
+                font-size: 12.7px;
+                font-weight: 700;
+                color: Theme.text-primary;
+                vertical-alignment: center;
+                horizontal-stretch: 0;
+                overflow: elide;
+            }
+            if root.card.account-count > 1: HorizontalLayout {
+                horizontal-stretch: 0;
+                width: self.preferred-width;
+                alignment: start;
+                spacing: 2px;
+                ArrowButton {
+                    glyph: "\u{E76B}";
+                    enabled: root.card.account-index > 0;
+                    clicked => { root.switch-account(root.card.id, -1, false); }
+                }
+                Text {
+                    horizontal-stretch: 0;
+                    text: (root.card.account-index + 1) + "/" + root.card.account-count;
+                    font-size: 10.7px;
+                    color: Theme.text-muted;
+                    vertical-alignment: center;
+                }
+                ArrowButton {
+                    glyph: "\u{E76C}";
+                    enabled: root.card.account-index + 1 < root.card.account-count;
+                    clicked => { root.switch-account(root.card.id, 1, false); }
+                }
+            }
+            Text {
+                text: root.card.slides.length > 0 ? root.card.slides[clamp(root.card.account-index, 0, root.card.slides.length - 1)].plan : "";
+                font-size: 10.7px;
+                color: Theme.text-muted;
+                horizontal-alignment: right;
+                vertical-alignment: center;
+                overflow: elide;
+            }
+        }
+
+        viewport := Rectangle {
+            clip: true;
+            height: max(root.card.min-body-height, slides.preferred-height);
+            slides := HorizontalLayout {
+                x: -root.card.account-index * viewport.width;
+                width: viewport.width * root.card.slides.length;
+                animate x { duration: 210ms; easing: ease-out-quart; }
+
+                for slide in root.card.slides: VerticalLayout {
+                    width: viewport.width;
+                    spacing: 8px;
+                    alignment: start;
+
+                    if slide.email != "": Text {
+                        height: 15px;
+                        text: slide.email;
+                        font-size: 10.7px;
+                        color: Theme.text-muted;
+                        vertical-alignment: center;
+                        overflow: elide;
+                    }
+
+                    VerticalLayout {
+                        spacing: 9px;
+                        alignment: start;
+                        if slide.metrics.length == 0: Text {
+                            height: 19px;
+                            text: L10n.no-metrics;
+                            font-size: 11.3px;
+                            color: Theme.text-muted;
+                            vertical-alignment: center;
+                        }
+                        for m in slide.metrics: MetricRow { m: m; }
+                    }
+                }
+            }
+        }
+    }
+}
+
+component IconButton inherits Rectangle {
+    in property <string> glyph;
+    callback clicked();
+    width: 26px;
+    height: 26px;
+    border-radius: min(self.height / 2, Theme.control-radius);
+    background: ta.has-hover ? Theme.hover-bg : transparent;
+    Text {
+        text: root.glyph;
+        font-family: "Segoe Fluent Icons";
+        font-size: 13px;
+        color: ta.has-hover ? Theme.text-primary : Theme.text-muted;
+        horizontal-alignment: center;
+        vertical-alignment: center;
+    }
+    ta := TouchArea {
+        clicked => { root.clicked(); }
+    }
+}
+
+export global RefreshIcon {
+    pure callback frame(angle) -> image;
+}
+
+component RefreshButton inherits Rectangle {
+    in property <bool> refreshing: false;
+    callback clicked();
+
+    width: 26px;
+    height: 26px;
+    border-radius: Theme.control-radius;
+    background: !root.refreshing && ta.has-hover ? Theme.hover-bg : transparent;
+    border-width: 0px;
+
+    Image {
+        x: (parent.width - self.width) / 2;
+        y: (parent.height - self.height) / 2;
+        width: 14px;
+        height: 14px;
+        source: root.refreshing
+            ? RefreshIcon.frame(mod(animation-tick(), 850ms) / 850ms * 360deg)
+            : @image-url("../assets/refresh-icon.svg");
+        colorize: root.refreshing ? Theme.text-primary : (ta.has-hover ? Theme.text-primary : Theme.text-muted);
+    }
+    ta := TouchArea {
+        enabled: !root.refreshing;
+        clicked => { root.clicked(); }
+    }
+}
+
+component LinkButton inherits Rectangle {
+    in property <string> text;
+    in property <color> tint: Theme.text-secondary;
+    in property <bool> enabled: true;
+    callback clicked();
+    height: 22px;
+    width: label.preferred-width + 16px;
+    border-radius: min(self.height / 2, Theme.control-radius);
+    background: ta.has-hover && root.enabled ? Theme.hover-bg : transparent;
+    border-width: Theme.border-w;
+    border-color: Theme.badge-border;
+    opacity: root.enabled ? 1.0 : 0.5;
+    label := Text {
+        text: root.text;
+        font-size: 10.7px;
+        color: root.tint;
+        horizontal-alignment: center;
+        vertical-alignment: center;
+    }
+    ta := TouchArea {
+        enabled: root.enabled;
+        clicked => { root.clicked(); }
+    }
+}
+
+component TimeStepper inherits HorizontalLayout {
+    in property <string> value;
+    callback step(int);
+
+    alignment: start;
+    cross-axis-alignment: center;
+    horizontal-stretch: 0;
+    spacing: 4px;
+
+    LinkButton {
+        width: 22px;
+        text: "−";
+        clicked => { root.step(-30); }
+    }
+    Rectangle {
+        width: 42px;
+        height: 22px;
+        border-radius: Theme.control-radius;
+        background: Theme.badge-bg;
+        border-width: Theme.border-w;
+        border-color: Theme.badge-border;
+
+        Text {
+            text: root.value;
+            font-family: "Consolas";
+            font-size: 10.8px;
+            font-weight: 700;
+            color: Theme.text-primary;
+            horizontal-alignment: center;
+            vertical-alignment: center;
+        }
+    }
+    LinkButton {
+        width: 22px;
+        text: "+";
+        clicked => { root.step(30); }
+    }
+}
+
+component QuietHoursRange inherits HorizontalLayout {
+    in property <string> start-time;
+    in property <string> end-time;
+    callback step-start(int);
+    callback step-end(int);
+
+    spacing: 6px;
+    alignment: start;
+    cross-axis-alignment: center;
+
+    TimeStepper {
+        value: root.start-time;
+        step(delta) => { root.step-start(delta); }
+    }
+    Text {
+        text: "–";
+        font-size: 10.5px;
+        color: Theme.text-muted;
+        vertical-alignment: center;
+    }
+    TimeStepper {
+        value: root.end-time;
+        step(delta) => { root.step-end(delta); }
+    }
+}
+
+component SwitchToggle inherits Rectangle {
+    in property <bool> checked;
+    callback toggled(bool);
+    width: 34px;
+    height: 18px;
+    border-radius: min(self.height / 2, Theme.control-radius);
+    background: root.checked ? Theme.emerald : Theme.track;
+    border-width: Theme.border-w;
+    border-color: root.checked ? Theme.emerald : Theme.badge-border;
+    Rectangle {
+        x: root.checked ? parent.width - self.width - 2px : 2px;
+        y: 2px;
+        width: 14px;
+        height: 14px;
+        border-radius: min(self.height / 2, Theme.control-radius);
+        background: #FFFFFF;
+    }
+    TouchArea {
+        clicked => { root.toggled(!root.checked); }
+    }
+}
+
+component LangButton inherits Rectangle {
+    in property <string> label;
+    in property <bool> active;
+    callback clicked();
+    width: 32px;
+    height: 22px;
+    border-radius: min(self.height / 2, Theme.control-radius);
+    background: root.active ? Theme.emerald : (ta.has-hover ? Theme.hover-bg : transparent);
+    border-width: Theme.border-w;
+    border-color: root.active ? Theme.emerald : Theme.badge-border;
+    Text {
+        text: root.label;
+        font-size: 10.5px;
+        font-weight: 700;
+        color: root.active ? Theme.active-btn-text : Theme.text-secondary;
+        horizontal-alignment: center;
+        vertical-alignment: center;
+    }
+    ta := TouchArea {
+        clicked => { root.clicked(); }
+    }
+}
+
+component ThemeChip inherits Rectangle {
+    in property <string> code;
+    in property <string> label;
+    in property <color> swatch-bg;
+    in property <color> swatch-accent;
+    callback set-theme(string);
+
+    property <bool> active: Theme.active-theme == root.code;
+
+    height: 28px;
+    preferred-width: 0px;
+    horizontal-stretch: 1;
+    border-radius: Theme.control-radius;
+    background: root.active ? Theme.badge-bg : (ta.has-hover ? Theme.hover-bg : Theme.bg);
+    border-width: root.active ? max(1.5px, Theme.border-w) : Theme.border-w;
+    border-color: root.active ? Theme.emerald : Theme.badge-border;
+
+    HorizontalLayout {
+        padding-left: 8px;
+        padding-right: 8px;
+        spacing: 6px;
+        cross-axis-alignment: center;
+
+        Rectangle {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+            background: root.swatch-bg;
+            border-width: 1px;
+            border-color: Theme.badge-border;
+
+            Rectangle {
+                x: (parent.width - self.width) / 2;
+                y: (parent.height - self.height) / 2;
+                width: 5px;
+                height: 5px;
+                border-radius: self.width / 2;
+                background: root.swatch-accent;
+            }
+        }
+
+        Text {
+            text: root.label;
+            horizontal-stretch: 1;
+            font-size: 10.8px;
+            font-weight: root.active ? 700 : 400;
+            color: root.active ? Theme.text-primary : Theme.text-secondary;
+            vertical-alignment: center;
+            overflow: elide;
+        }
+    }
+
+    ta := TouchArea {
+        clicked => { root.set-theme(root.code); }
+    }
+}
+
+component ThemePicker inherits VerticalLayout {
+    callback set-theme(string);
+    spacing: 6px;
+
+    HorizontalLayout {
+        spacing: 8px;
+        Text {
+            text: L10n.design-language;
+            font-size: 11.3px;
+            color: Theme.text-secondary;
+            vertical-alignment: center;
+            horizontal-stretch: 0;
+        }
+        Text {
+            text: L10n.theme-hint;
+            font-size: 9.8px;
+            color: Theme.text-dim;
+            vertical-alignment: center;
+            horizontal-alignment: right;
+            horizontal-stretch: 1;
+            overflow: elide;
+        }
+    }
+
+    HorizontalLayout {
+        spacing: 6px;
+        ThemeChip {
+            code: "obsidian";
+            label: L10n.theme-obsidian;
+            swatch-bg: #0F1117;
+            swatch-accent: #10B981;
+            set-theme(code) => { root.set-theme(code); }
+        }
+        ThemeChip {
+            code: "paper";
+            label: L10n.theme-paper;
+            swatch-bg: #F6F4EF;
+            swatch-accent: #059669;
+            set-theme(code) => { root.set-theme(code); }
+        }
+        ThemeChip {
+            code: "brutalist";
+            label: L10n.theme-brutalist;
+            swatch-bg: #09090B;
+            swatch-accent: #84CC16;
+            set-theme(code) => { root.set-theme(code); }
+        }
+    }
+
+    HorizontalLayout {
+        spacing: 6px;
+        ThemeChip {
+            code: "terminal";
+            label: L10n.theme-terminal;
+            swatch-bg: #060B08;
+            swatch-accent: #22C55E;
+            set-theme(code) => { root.set-theme(code); }
+        }
+        ThemeChip {
+            code: "nordic";
+            label: L10n.theme-nordic;
+            swatch-bg: #171C26;
+            swatch-accent: #5EEAD4;
+            set-theme(code) => { root.set-theme(code); }
+        }
+    }
+}
+
+component GeneralCard inherits Rectangle {
+    in property <bool> autostart;
+    in property <bool> alerts-enabled;
+    callback toggle-autostart(bool);
+    callback toggle-alerts(bool);
+    callback test-alert();
+    callback set-lang(string);
+    callback set-theme(string);
+    border-radius: Theme.card-radius;
+    background: Theme.card;
+    border-width: Theme.border-w;
+    border-color: Theme.card-border;
+
+    VerticalLayout {
+        padding-left: 13px;
+        padding-right: 13px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        spacing: 9px;
+
+        HorizontalLayout {
+            spacing: 8px;
+            Text {
+                text: L10n.autostart;
+                horizontal-stretch: 1;
+                font-size: 11.3px;
+                color: Theme.text-secondary;
+                vertical-alignment: center;
+                overflow: elide;
+            }
+            VerticalLayout {
+                alignment: center;
+                horizontal-stretch: 0;
+                SwitchToggle {
+                    checked: root.autostart;
+                    toggled(v) => { root.toggle-autostart(v); }
+                }
+            }
+        }
+
+        HorizontalLayout {
+            spacing: 8px;
+            Text {
+                text: L10n.notifications;
+                horizontal-stretch: 1;
+                font-size: 11.3px;
+                color: Theme.text-secondary;
+                vertical-alignment: center;
+                overflow: elide;
+            }
+            VerticalLayout {
+                alignment: center;
+                horizontal-stretch: 0;
+                LinkButton {
+                    text: L10n.test-btn;
+                    tint: Theme.sky;
+                    clicked => { root.test-alert(); }
+                }
+            }
+            VerticalLayout {
+                alignment: center;
+                horizontal-stretch: 0;
+                SwitchToggle {
+                    checked: root.alerts-enabled;
+                    toggled(v) => { root.toggle-alerts(v); }
+                }
+            }
+        }
+
+        HorizontalLayout {
+            spacing: 8px;
+            Text {
+                text: L10n.language;
+                horizontal-stretch: 1;
+                font-size: 11.3px;
+                color: Theme.text-secondary;
+                vertical-alignment: center;
+            }
+            HorizontalLayout {
+                horizontal-stretch: 0;
+                spacing: 4px;
+                LangButton {
+                    label: "TR";
+                    active: !L10n.is-en;
+                    clicked => { root.set-lang("tr"); }
+                }
+                LangButton {
+                    label: "EN";
+                    active: L10n.is-en;
+                    clicked => { root.set-lang("en"); }
+                }
+            }
+        }
+
+        Rectangle { height: 1px; background: Theme.card-border; }
+
+        ThemePicker {
+            set-theme(code) => { root.set-theme(code); }
+        }
+    }
+}
+
+component ShortcutRow inherits HorizontalLayout {
+    in property <string> label;
+    in property <string> keys;
+    spacing: 8px;
+
+    Text {
+        text: root.label;
+        horizontal-stretch: 1;
+        font-size: 11.3px;
+        color: Theme.text-muted;
+        overflow: elide;
+        vertical-alignment: center;
+    }
+    Badge { text: root.keys; }
+}
+
+component ShortcutsCard inherits Rectangle {
+    border-radius: Theme.card-radius;
+    background: Theme.card;
+    border-width: Theme.border-w;
+    border-color: Theme.card-border;
+
+    VerticalLayout {
+        padding-left: 13px;
+        padding-right: 13px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        spacing: 8px;
+
+        ShortcutRow { label: L10n.hotkey-label; keys: "Alt + Shift + Q"; }
+        ShortcutRow { label: L10n.shortcut-refresh; keys: L10n.shortcut-refresh-keys; }
+        ShortcutRow { label: L10n.shortcut-close; keys: L10n.shortcut-close-keys; }
+        ShortcutRow { label: L10n.shortcut-switch; keys: L10n.shortcut-switch-keys; }
+    }
+}
+
+component ManageProvidersCard inherits Rectangle {
+    callback clicked();
+    border-radius: Theme.card-radius;
+    background: ta.has-hover ? Theme.hover-bg : Theme.card;
+    border-width: Theme.border-w;
+    border-color: ta.has-hover ? Theme.badge-border : Theme.card-border;
+
+    HorizontalLayout {
+        padding-left: 13px;
+        padding-right: 13px;
+        padding-top: 11px;
+        padding-bottom: 11px;
+        spacing: 8px;
+
+        VerticalLayout {
+            horizontal-stretch: 1;
+            spacing: 3px;
+            Text {
+                text: L10n.manage-providers-title;
+                font-size: 12px;
+                font-weight: 700;
+                color: Theme.text-primary;
+                overflow: elide;
+            }
+            Text {
+                text: L10n.manage-providers-sub;
+                font-size: 10.7px;
+                color: Theme.text-muted;
+                overflow: elide;
+            }
+        }
+        Text {
+            text: "\u{E76C}";
+            font-family: "Segoe Fluent Icons";
+            font-size: 11px;
+            color: Theme.text-muted;
+            vertical-alignment: center;
+        }
+    }
+    ta := TouchArea {
+        clicked => { root.clicked(); }
+    }
+}
+
+component TabButton inherits Rectangle {
+    in property <string> label;
+    in property <bool> active;
+    callback clicked();
+    height: 26px;
+    min-width: 0px;
+    preferred-width: 0px;
+    horizontal-stretch: 1;
+    border-radius: min(self.height / 2, Theme.control-radius);
+    background: root.active ? Theme.badge-bg : (ta.has-hover ? Theme.hover-bg : transparent);
+    border-width: root.active ? Theme.border-w : 0px;
+    border-color: Theme.badge-border;
+
+    Text {
+        text: root.label;
+        font-size: 11.5px;
+        font-weight: root.active ? 700 : 400;
+        color: root.active ? Theme.text-primary : Theme.text-muted;
+        horizontal-alignment: center;
+        vertical-alignment: center;
+    }
+    ta := TouchArea {
+        clicked => { root.clicked(); }
+    }
+}
+
+component FilterChip inherits Rectangle {
+    in property <string> label;
+    in property <bool> active;
+    callback clicked();
+
+    width: chip-label.preferred-width + 18px;
+    height: 24px;
+    border-radius: Theme.control-radius;
+    background: root.active ? Theme.badge-bg : (ta.has-hover ? Theme.hover-bg : transparent);
+    border-width: root.active ? Theme.border-w : 0px;
+    border-color: Theme.badge-border;
+
+    chip-label := Text {
+        text: root.label;
+        font-size: 10.7px;
+        font-weight: root.active ? 700 : 400;
+        color: root.active ? Theme.text-primary : Theme.text-muted;
+        horizontal-alignment: center;
+        vertical-alignment: center;
+    }
+    ta := TouchArea {
+        clicked => { root.clicked(); }
+    }
+}
+
+component ActivationModePicker inherits HorizontalLayout {
+    in property <int> mode;
+    callback set-mode(int);
+
+    alignment: start;
+    spacing: 6px;
+
+    FilterChip {
+        label: L10n.activation-mode-reset;
+        active: root.mode == 0;
+        clicked => { root.set-mode(0); }
+    }
+    FilterChip {
+        label: L10n.activation-mode-schedule;
+        active: root.mode == 1;
+        clicked => { root.set-mode(1); }
+    }
+}
+
+component MasterActivationCard inherits Rectangle {
+    in property <bool> enabled;
+    in property <int> mode;
+    in property <string> start-time;
+    in property <bool> quiet-enabled;
+    in property <string> quiet-start;
+    in property <string> quiet-end;
+    callback toggle-enabled(bool);
+    callback set-mode(int);
+    callback step-time(int);
+    callback toggle-quiet(bool);
+    callback step-quiet-start(int);
+    callback step-quiet-end(int);
+
+    border-radius: Theme.card-radius;
+    background: Theme.card;
+    border-width: Theme.border-w;
+    border-color: Theme.card-border;
+
+    VerticalLayout {
+        padding-left: 13px;
+        padding-right: 13px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        spacing: 6px;
+
+        HorizontalLayout {
+            spacing: 8px;
+            cross-axis-alignment: center;
+            Text {
+                text: L10n.activation-master;
+                horizontal-stretch: 1;
+                font-size: 11.3px;
+                color: Theme.text-secondary;
+                vertical-alignment: center;
+                overflow: elide;
+            }
+            SwitchToggle {
+                checked: root.enabled;
+                toggled(on) => { root.toggle-enabled(on); }
+            }
+        }
+        ActivationModePicker {
+            mode: root.mode;
+            set-mode(mode) => { root.set-mode(mode); }
+        }
+        if root.mode == 1: HorizontalLayout {
+            spacing: 8px;
+            alignment: start;
+            cross-axis-alignment: center;
+            Text {
+                text: L10n.activation-start-time;
+                font-size: 11.3px;
+                color: Theme.text-secondary;
+                vertical-alignment: center;
+            }
+            TimeStepper {
+                value: root.start-time;
+                step(delta) => { root.step-time(delta); }
+            }
+        }
+        HorizontalLayout {
+            spacing: 8px;
+            cross-axis-alignment: center;
+            Text {
+                text: L10n.activation-quiet-hours;
+                horizontal-stretch: 1;
+                font-size: 11.3px;
+                color: Theme.text-secondary;
+                vertical-alignment: center;
+            }
+            SwitchToggle {
+                checked: root.quiet-enabled;
+                toggled(on) => { root.toggle-quiet(on); }
+            }
+        }
+        if root.quiet-enabled: QuietHoursRange {
+            start-time: root.quiet-start;
+            end-time: root.quiet-end;
+            step-start(delta) => { root.step-quiet-start(delta); }
+            step-end(delta) => { root.step-quiet-end(delta); }
+        }
+        Text {
+            text: L10n.activation-hint;
+            font-size: 10px;
+            color: Theme.text-dim;
+            wrap: word-wrap;
+        }
+    }
+}
+
+component ProviderRow inherits Rectangle {
+    in property <ProviderListRow> entry;
+    callback clicked();
+
+    height: 34px;
+    border-radius: min(self.height / 2, Theme.control-radius);
+    background: root.entry.selected ? Theme.badge-bg : (ta.has-hover ? Theme.hover-bg : transparent);
+    border-width: root.entry.selected ? Theme.border-w : 0px;
+    border-color: Theme.badge-border;
+
+    if root.entry.selected: Rectangle {
+        x: 2px;
+        y: (parent.height - self.height) / 2;
+        width: 3px;
+        height: 16px;
+        border-radius: min(self.width / 2, Theme.control-radius);
+        background: root.entry.accent;
+    }
+    HorizontalLayout {
+        padding-left: 8px;
+        padding-right: 8px;
+        spacing: 8px;
+        cross-axis-alignment: center;
+
+        ProviderIconBadge {
+            size: 18px;
+            logo: root.entry.logo;
+            has-logo: root.entry.has-logo;
+            monogram: root.entry.monogram;
+            accent: root.entry.accent;
+            font-size: 8.5px;
+        }
+        Text {
+            horizontal-stretch: 1;
+            text: root.entry.name;
+            font-size: 11.8px;
+            font-weight: root.entry.selected ? 700 : 400;
+            color: root.entry.selected || root.entry.connected ? Theme.text-primary : Theme.text-secondary;
+            vertical-alignment: center;
+            overflow: elide;
+        }
+        if root.entry.account-count > 1: Text {
+            horizontal-stretch: 0;
+            text: root.entry.account-count;
+            font-size: 10.5px;
+            color: Theme.text-muted;
+            vertical-alignment: center;
+        }
+        Rectangle {
+            width: 6px;
+            height: 6px;
+            border-radius: min(self.width / 2, Theme.control-radius);
+            background: Theme.emerald;
+            visible: root.entry.connected;
+        }
+    }
+    ta := TouchArea {
+        clicked => { root.clicked(); }
+    }
+}
+
+component ProviderSidebar inherits Rectangle {
+    in property <[ProviderListRow]> provider-list;
+    in property <int> total-provider-count;
+    in property <int> connected-provider-count;
+    in property <bool> loading;
+    in property <int> filter-mode;
+    in-out property <string> search-text;
+    callback search-changed(string);
+    callback set-filter(int);
+    callback select-provider(string);
+
+    border-radius: Theme.card-radius;
+    background: Theme.card;
+    border-width: Theme.border-w;
+    border-color: Theme.card-border;
+
+    changed search-text => { provider-scroll.content-y = 0px; }
+    changed filter-mode => { provider-scroll.content-y = 0px; }
+
+    VerticalLayout {
+        padding: 10px;
+        spacing: 8px;
+
+        Rectangle {
+            height: 30px;
+            border-radius: min(self.height / 2, Theme.control-radius);
+            background: Theme.bg;
+            border-width: Theme.border-w;
+            border-color: search-input.has-focus ? Theme.sky : Theme.badge-border;
+
+            HorizontalLayout {
+                padding-left: 8px;
+                padding-right: 6px;
+                spacing: 6px;
+                cross-axis-alignment: center;
+
+                Text {
+                    width: 12px;
+                    text: "\u{E721}";
+                    font-family: "Segoe Fluent Icons";
+                    font-size: 11px;
+                    color: Theme.text-dim;
+                    horizontal-alignment: center;
+                    vertical-alignment: center;
+                }
+                Rectangle {
+                    min-width: 0px;
+                    horizontal-stretch: 1;
+                    cross-axis-self-alignment: stretch;
+
+                    if root.search-text == "": Text {
+                        x: 0px;
+                        width: parent.width;
+                        text: L10n.search-placeholder;
+                        font-size: 11.5px;
+                        color: Theme.text-dim;
+                        horizontal-alignment: left;
+                        vertical-alignment: center;
+                        overflow: elide;
+                    }
+                    search-input := TextInput {
+                        text <=> root.search-text;
+                        single-line: true;
+                        font-size: 11.5px;
+                        color: Theme.text-primary;
+                        vertical-alignment: center;
+                        edited => { root.search-changed(self.text); }
+                    }
+                }
+                if root.search-text != "": ArrowButton {
+                    glyph: "\u{E711}";
+                    clicked => {
+                        root.search-text = "";
+                        root.search-changed("");
+                        search-input.focus();
+                    }
+                }
+            }
+        }
+
+        HorizontalLayout {
+            alignment: start;
+            spacing: 6px;
+            FilterChip {
+                label: L10n.filter-all + " (" + root.total-provider-count + ")";
+                active: root.filter-mode == 0;
+                clicked => { root.set-filter(0); }
+            }
+            FilterChip {
+                label: L10n.filter-connected + " (" + root.connected-provider-count + ")";
+                active: root.filter-mode == 1;
+                clicked => { root.set-filter(1); }
+            }
+        }
+
+        Rectangle { height: Theme.border-w; background: Theme.card-border; }
+
+        Rectangle {
+            vertical-stretch: 1;
+
+            provider-scroll := Flickable {
+                content-width: self.width;
+                content-height: max(self.height, list.preferred-height);
+                changed content-height => {
+                    self.content-y = clamp(self.content-y, min(0px, self.height - self.content-height), 0px);
+                }
+
+                list := VerticalLayout {
+                    width: parent.width;
+                    spacing: 2px;
+                    alignment: start;
+                    for row in root.provider-list: ProviderRow {
+                        entry: row;
+                        clicked => { root.select-provider(row.id); }
+                    }
+                }
+            }
+
+            if root.provider-list.length == 0: Text {
+                text: root.loading ? L10n.loading-accounts : L10n.no-search-results;
+                font-size: 11.3px;
+                color: Theme.text-muted;
+                wrap: word-wrap;
+                horizontal-alignment: center;
+                vertical-alignment: center;
+            }
+        }
+    }
+}
+
+component ProviderDetailPane inherits Rectangle {
+    in property <ProviderDetail> provider;
+    in property <bool> has-selection;
+    in property <bool> loading;
+    in-out property <string> api-key-draft;
+    callback account-action(string, string, bool);
+    callback add-account(string);
+    callback toggle-provider(string, bool);
+    callback save-api-key(string, string);
+    callback act-set-account-enabled(string, string, bool);
+    callback act-set-account-follow(string, string, bool);
+    callback act-set-account-mode(string, string, int);
+    callback act-step-account-time(string, string, int);
+    callback act-set-account-quiet(string, string, bool);
+    callback act-step-account-quiet-start(string, string, int);
+    callback act-step-account-quiet-end(string, string, int);
+    callback act-trigger-now(string, string);
+
+    property <string> provider-id: root.has-selection ? root.provider.id : "";
+    property <bool> can-save-key: !root.provider.busy && root.api-key-draft != "";
+    property <color> note-color: root.provider.note-kind == 1 ? Theme.sky
+        : root.provider.note-kind == 2 ? Theme.coral : Theme.text-muted;
+
+    border-radius: Theme.card-radius;
+    background: Theme.card;
+    border-width: Theme.border-w;
+    border-color: Theme.card-border;
+
+    changed provider-id => { detail-scroll.content-y = 0px; }
+
+    function submit-key() {
+        if root.can-save-key {
+            root.save-api-key(root.provider.id, root.api-key-draft);
+            root.api-key-draft = "";
+        }
+    }
+
+    if !root.has-selection: Text {
+        text: root.loading ? L10n.loading-accounts : L10n.no-search-results;
+        font-size: 11.5px;
+        color: Theme.text-muted;
+        horizontal-alignment: center;
+        vertical-alignment: center;
+    }
+
+    detail-scroll := Flickable {
+        y: Theme.border-w;
+        height: max(0px, parent.height - 2 * Theme.border-w);
+        visible: root.has-selection;
+        content-width: self.width;
+        content-height: max(self.height, detail.preferred-height);
+        changed content-height => {
+            self.content-y = clamp(self.content-y, min(0px, self.height - self.content-height), 0px);
+        }
+
+        detail := VerticalLayout {
+            width: parent.width;
+            padding-left: 18px;
+            padding-right: 18px;
+            padding-top: 16px;
+            padding-bottom: 16px;
+            spacing: 14px;
+            alignment: start;
+
+            VerticalLayout {
+                spacing: 8px;
+
+                HorizontalLayout {
+                    height: 36px;
+                    spacing: 10px;
+                    cross-axis-alignment: center;
+
+                    ProviderIconBadge {
+                        size: 36px;
+                        logo: root.provider.logo;
+                        has-logo: root.provider.has-logo;
+                        monogram: root.provider.monogram;
+                        accent: root.provider.accent;
+                        font-size: 13px;
+                        background: root.provider.has-logo ? Theme.badge-bg : Theme.monogram-bg;
+                        border-width: Theme.border-w;
+                    }
+
+                    Text {
+                        text: root.provider.name;
+                        horizontal-stretch: 1;
+                        font-size: 16px;
+                        font-weight: 700;
+                        color: Theme.text-primary;
+                        vertical-alignment: center;
+                        overflow: elide;
+                    }
+
+                    if root.provider.accounts.length == 0 && !root.provider.can-add
+                        && (root.provider.connected || root.provider.api-key-mode != 1): LinkButton {
+                        text: root.provider.connected ? L10n.remove-btn : L10n.connect-btn;
+                        tint: root.provider.connected ? Theme.coral : Theme.emerald;
+                        enabled: !root.provider.busy;
+                        clicked => { root.toggle-provider(root.provider.id, !root.provider.connected); }
+                    }
+                }
+                HorizontalLayout {
+                    height: 18px;
+                    spacing: 8px;
+                    alignment: start;
+                    cross-axis-alignment: center;
+
+                    Badge { text: root.provider.auth-label; }
+                    if root.provider.connected: HorizontalLayout {
+                        spacing: 5px;
+                        cross-axis-alignment: center;
+                        Rectangle {
+                            width: 6px;
+                            height: 6px;
+                            border-radius: min(self.width / 2, Theme.control-radius);
+                            background: Theme.emerald;
+                        }
+                        Text {
+                            text: L10n.connected-badge;
+                            font-size: 10.7px;
+                            color: Theme.emerald;
+                            vertical-alignment: center;
+                        }
+                    }
+                }
+            }
+
+            Rectangle { height: Theme.border-w; background: Theme.card-border; }
+
+            if root.provider.accounts.length > 0 || root.provider.can-add: VerticalLayout {
+                spacing: 6px;
+
+                Text {
+                    text: L10n.accounts-section;
+                    font-size: 11px;
+                    font-weight: 700;
+                    color: Theme.text-secondary;
+                }
+                for account in root.provider.accounts: Rectangle {
+                    border-radius: Theme.control-radius;
+                    background: Theme.bg;
+                    border-width: Theme.border-w;
+                    border-color: Theme.card-border;
+
+                    VerticalLayout {
+                        padding-left: 10px;
+                        padding-right: 10px;
+                        padding-top: 6px;
+                        padding-bottom: 6px;
+                        spacing: 6px;
+
+                        HorizontalLayout {
+                            height: 22px;
+                            spacing: 8px;
+                            cross-axis-alignment: center;
+
+                            Text {
+                                horizontal-stretch: 1;
+                                text: account.email;
+                                font-size: 11.3px;
+                                color: account.connected ? Theme.text-secondary : Theme.text-muted;
+                                vertical-alignment: center;
+                                overflow: elide;
+                            }
+                            LinkButton {
+                                text: account.connected ? L10n.remove-btn : L10n.connect-btn;
+                                tint: account.connected ? Theme.coral : Theme.emerald;
+                                enabled: !root.provider.busy;
+                                clicked => {
+                                    root.account-action(root.provider.id, account.key, !account.connected);
+                                }
+                            }
+                        }
+
+                        if account.has-5h-window && account.connected: Rectangle {
+                            height: 1px;
+                            background: Theme.card-border;
+                        }
+                        if account.has-5h-window && account.connected: VerticalLayout {
+                            spacing: 6px;
+
+                            HorizontalLayout {
+                                alignment: start;
+                                spacing: 4px;
+                                cross-axis-alignment: center;
+
+                                Text {
+                                    text: L10n.activation-account-toggle;
+                                    font-size: 10.5px;
+                                    color: Theme.text-muted;
+                                    vertical-alignment: center;
+                                    wrap: word-wrap;
+                                }
+                                SwitchToggle {
+                                    checked: account.act-enabled;
+                                    toggled(on) => {
+                                        root.act-set-account-enabled(root.provider.id, account.key, on);
+                                    }
+                                }
+                                if account.act-enabled: Text {
+                                    text: L10n.activation-follow-master;
+                                    font-size: 10.5px;
+                                    color: Theme.text-muted;
+                                    vertical-alignment: center;
+                                    wrap: word-wrap;
+                                }
+                                if account.act-enabled: SwitchToggle {
+                                    checked: account.act-follow-master;
+                                    toggled(on) => {
+                                        root.act-set-account-follow(root.provider.id, account.key, on);
+                                    }
+                                }
+                                if account.act-enabled: LinkButton {
+                                    text: L10n.activation-start-now;
+                                    tint: Theme.sky;
+                                    enabled: !account.act-busy;
+                                    clicked => { root.act-trigger-now(root.provider.id, account.key); }
+                                }
+                            }
+
+                            if account.act-enabled && !account.act-follow-master: VerticalLayout {
+                                spacing: 6px;
+
+                                ActivationModePicker {
+                                    mode: account.act-mode;
+                                    set-mode(mode) => {
+                                        root.act-set-account-mode(root.provider.id, account.key, mode);
+                                    }
+                                }
+                                if account.act-mode == 1: HorizontalLayout {
+                                    alignment: start;
+                                    spacing: 6px;
+                                    cross-axis-alignment: center;
+                                    Text {
+                                        text: L10n.activation-start-time;
+                                        font-size: 10.5px;
+                                        color: Theme.text-muted;
+                                        vertical-alignment: center;
+                                    }
+                                    TimeStepper {
+                                        value: account.act-time;
+                                        step(delta) => {
+                                            root.act-step-account-time(root.provider.id, account.key, delta);
+                                        }
+                                    }
+                                }
+                                HorizontalLayout {
+                                    alignment: start;
+                                    spacing: 6px;
+                                    cross-axis-alignment: center;
+                                    Text {
+                                        text: L10n.activation-quiet-hours;
+                                        font-size: 10.5px;
+                                        color: Theme.text-muted;
+                                        vertical-alignment: center;
+                                    }
+                                    SwitchToggle {
+                                        checked: account.act-quiet-enabled;
+                                        toggled(on) => {
+                                            root.act-set-account-quiet(root.provider.id, account.key, on);
+                                        }
+                                    }
+                                }
+                                if account.act-quiet-enabled: QuietHoursRange {
+                                    start-time: account.act-quiet-start;
+                                    end-time: account.act-quiet-end;
+                                    step-start(delta) => {
+                                        root.act-step-account-quiet-start(root.provider.id, account.key, delta);
+                                    }
+                                    step-end(delta) => {
+                                        root.act-step-account-quiet-end(root.provider.id, account.key, delta);
+                                    }
+                                }
+                            }
+
+                            if account.act-status != "": Text {
+                                text: account.act-status;
+                                font-size: 10px;
+                                color: account.act-busy ? Theme.sky : Theme.text-muted;
+                                wrap: word-wrap;
+                            }
+                        }
+                    }
+                }
+                if root.provider.can-add: HorizontalLayout {
+                    alignment: start;
+                    LinkButton {
+                        text: L10n.add-account-btn;
+                        tint: Theme.emerald;
+                        enabled: !root.provider.busy;
+                        clicked => { root.add-account(root.provider.id); }
+                    }
+                }
+            }
+
+            if root.provider.api-key-mode > 0: VerticalLayout {
+                spacing: 6px;
+
+                Text {
+                    text: root.provider.api-key-mode == 1 ? L10n.api-key-section : L10n.optional-api-key-section;
+                    font-size: 11px;
+                    font-weight: 700;
+                    color: Theme.text-secondary;
+                }
+                if root.provider.api-help != "": Text {
+                    text: root.provider.api-help;
+                    font-size: 11px;
+                    color: Theme.text-muted;
+                    wrap: word-wrap;
+                }
+                if root.provider.api-env != "": HorizontalLayout {
+                    alignment: start;
+                    Badge { text: root.provider.api-env; }
+                }
+                Rectangle {
+                    height: 32px;
+                    border-radius: min(self.height / 2, Theme.control-radius);
+                    background: Theme.bg;
+                    border-width: Theme.border-w;
+                    border-color: key-input.has-focus ? Theme.sky : Theme.badge-border;
+
+                    if root.api-key-draft == "": Text {
+                        x: 8px;
+                        width: parent.width - 16px;
+                        height: parent.height;
+                        text: L10n.api-key-placeholder;
+                        font-size: 11.5px;
+                        color: Theme.text-dim;
+                        vertical-alignment: center;
+                        overflow: elide;
+                    }
+                    key-input := TextInput {
+                        x: 8px;
+                        width: parent.width - 16px;
+                        height: parent.height;
+                        text <=> root.api-key-draft;
+                        input-type: password;
+                        single-line: true;
+                        font-size: 11.5px;
+                        color: Theme.text-primary;
+                        vertical-alignment: center;
+                        accepted => { root.submit-key(); }
+                    }
+                }
+                HorizontalLayout {
+                    alignment: start;
+                    LinkButton {
+                        text: root.provider.connected ? L10n.update-key-btn : L10n.save-key-btn;
+                        tint: Theme.emerald;
+                        enabled: root.can-save-key;
+                        clicked => { root.submit-key(); }
+                    }
+                }
+            }
+
+            if root.provider.accounts.length == 0 && !root.provider.can-add && root.provider.api-key-mode == 0: Text {
+                text: L10n.auto-detect-desc;
+                font-size: 11.5px;
+                color: Theme.text-muted;
+                wrap: word-wrap;
+            }
+
+            if root.provider.note != "": Rectangle {
+                border-radius: Theme.card-radius;
+                background: Theme.bg;
+                border-width: Theme.border-w;
+                border-color: root.provider.note-kind == 0 ? Theme.card-border : root.note-color;
+
+                VerticalLayout {
+                    padding: 10px;
+                    Text {
+                        text: root.provider.note;
+                        font-size: 10.7px;
+                        color: root.note-color;
+                        wrap: word-wrap;
+                    }
+                }
+            }
+        }
+    }
+}
+
+component PanelHeader inherits HorizontalLayout {
+    in property <bool> settings-open;
+    in property <bool> refreshing: false;
+    in property <length> mark-size;
+    in property <length> title-size;
+    callback back();
+    callback refresh();
+    callback open-settings();
+
+    if root.settings-open: VerticalLayout {
+        alignment: center;
+        horizontal-stretch: 0;
+        IconButton {
+            glyph: "\u{E72B}";
+            clicked => { root.back(); }
+        }
+    }
+    if !root.settings-open: VerticalLayout {
+        alignment: center;
+        horizontal-stretch: 0;
+        Image {
+            width: root.mark-size;
+            height: root.mark-size;
+            source: Theme.is-light ? @image-url("../assets/qpeek-mark-light.svg") : @image-url("../assets/qpeek-mark.svg");
+        }
+    }
+    Text {
+        text: root.settings-open ? L10n.settings : "QPeek";
+        horizontal-stretch: 1;
+        font-size: root.title-size;
+        font-weight: 700;
+        color: Theme.text-primary;
+        vertical-alignment: center;
+    }
+    if !root.settings-open: VerticalLayout {
+        alignment: center;
+        horizontal-stretch: 0;
+        RefreshButton {
+            refreshing: root.refreshing;
+            clicked => { root.refresh(); }
+        }
+    }
+    if !root.settings-open: VerticalLayout {
+        alignment: center;
+        horizontal-stretch: 0;
+        IconButton {
+            glyph: "\u{E713}";
+            clicked => { root.open-settings(); }
+        }
+    }
+}
+
+component PanelFooter inherits VerticalLayout {
+    in property <bool> settings-open;
+    in property <string> status-text;
+    in property <color> status-color;
+    height: 18px;
+
+    if !root.settings-open: HorizontalLayout {
+        height: 18px;
+        alignment: center;
+        spacing: 6px;
+        VerticalLayout {
+            alignment: center;
+            Rectangle {
+                width: 6px;
+                height: 6px;
+                border-radius: min(self.width / 2, Theme.control-radius);
+                background: root.status-color;
+            }
+        }
+        Text {
+            text: root.status-text;
+            font-size: 10.5px;
+            color: Theme.text-muted;
+            vertical-alignment: center;
+        }
+    }
+    if root.settings-open: Text {
+        height: 18px;
+        text: L10n.settings-footer;
+        font-size: 10px;
+        color: Theme.text-dim;
+        horizontal-alignment: center;
+        vertical-alignment: center;
+    }
+}
+
+component EmptyCard inherits Rectangle {
+    in property <string> text;
+
+    height: 84px;
+    border-radius: Theme.card-radius;
+    background: Theme.card;
+    border-width: Theme.border-w;
+    border-color: Theme.card-border;
+
+    Text {
+        x: 14px;
+        width: parent.width - 28px;
+        text: root.text;
+        font-size: 11.3px;
+        color: Theme.text-muted;
+        wrap: word-wrap;
+        horizontal-alignment: center;
+        vertical-alignment: center;
+    }
+}
+
+component SettingsErrorBanner inherits Rectangle {
+    in property <string> text;
+
+    border-radius: Theme.card-radius;
+    background: Theme.card;
+    border-width: Theme.border-w;
+    border-color: Theme.coral;
+
+    VerticalLayout {
+        padding: 11px;
+        Text {
+            text: root.text;
+            font-size: 11.3px;
+            color: Theme.coral;
+            wrap: word-wrap;
+        }
+    }
+}
+
+export component AboutWindow inherits Window {
+    title: L10n.about-title;
+    icon: @image-url("../assets/qpeek-64.png");
+    width: 380px;
+    height: 340px;
+    background: Theme.bg;
+    default-font-family: Theme.font-family;
+
+    property <bool> light-theme: Theme.is-light;
+
+    init => { root.sync-slint-palette(); }
+    changed light-theme => { root.sync-slint-palette(); }
+
+    function sync-slint-palette() {
+        Palette.color-scheme = root.light-theme ? ColorScheme.light : ColorScheme.dark;
+    }
+
+    VerticalLayout {
+        padding: 16px;
+        spacing: 10px;
+        HorizontalLayout {
+            spacing: 10px;
+            alignment: start;
+            Image {
+                width: 28px;
+                height: 28px;
+                source: @image-url("../assets/qpeek-64.png");
+            }
+            Text {
+                text: "QPeek";
+                font-size: 20px;
+                font-weight: 700;
+                color: Theme.text-primary;
+                vertical-alignment: center;
+            }
+        }
+        Text {
+            text: L10n.about-desc;
+            wrap: word-wrap;
+            font-size: 12px;
+            color: Theme.text-muted;
+        }
+        Rectangle {
+            border-radius: Theme.card-radius;
+            background: Theme.card;
+            border-width: Theme.border-w;
+            border-color: Theme.card-border;
+            AboutSlint { }
+        }
+    }
+}
+
+// Tepsi açılır paneli: görev çubuğunda düğme açmaz, saatin üstünde 384×610 sabit açılır.
+export component MainWindow inherits Window {
+    title: "QPeek";
+    icon: @image-url("../assets/qpeek-64.png");
+    no-frame: true;
+    always-on-top: true;
+    background: Theme.bg;
+    default-font-family: Theme.font-family;
+    width: 384px;
+    height: 610px;
+    forward-focus: keys;
+
+    in property <[ProviderCard]> cards;
+    in property <bool> refreshing: false;
+    in property <string> status-text;
+    in property <color> status-color;
+    in property <string> empty-text;
+    in property <string> settings-error;
+    in property <bool> autostart;
+    in property <bool> alerts-enabled;
+    in-out property <bool> settings-open;
+    callback refresh();
+    callback dismiss();
+    callback open-providers();
+    callback switch-account(string, int, bool);
+    callback toggle-autostart(bool);
+    callback toggle-alerts(bool);
+    callback test-alert();
+    callback set-lang(string);
+    callback set-theme(string);
+
+    keys := FocusScope {
+        key-pressed(ev) => {
+            if ev.text == Key.Escape {
+                if root.settings-open {
+                    scroll.content-y = 0px;
+                    root.settings-open = false;
+                } else {
+                    root.dismiss();
+                }
+                return accept;
+            }
+            reject
+        }
+    }
+
+    TouchArea {
+        pointer-event(ev) => {
+            if ev.kind == PointerEventKind.down && ev.button == PointerEventButton.right {
+                root.refresh();
+            }
+        }
+    }
+
+    VerticalLayout {
+        padding-left: 14px;
+        padding-right: 14px;
+        padding-top: 14px;
+        padding-bottom: 12px;
+        spacing: 0px;
+
+        PanelHeader {
+            height: 30px;
+            spacing: 6px;
+            mark-size: 20px;
+            title-size: 14.7px;
+            settings-open: root.settings-open;
+            refreshing: root.refreshing;
+            back => {
+                scroll.content-y = 0px;
+                root.settings-open = false;
+            }
+            refresh => { root.refresh(); }
+            open-settings => {
+                scroll.content-y = 0px;
+                root.settings-open = true;
+            }
+        }
+
+        Rectangle { height: 10px; }
+
+        scroll := Flickable {
+            vertical-stretch: 1;
+            content-width: self.width;
+            content-height: max(self.height, body.preferred-height);
+
+            body := VerticalLayout {
+                width: parent.width;
+                alignment: start;
+
+                if !root.settings-open: VerticalLayout {
+                    spacing: 9px;
+                    alignment: start;
+                    if root.cards.length == 0: EmptyCard {
+                        text: root.empty-text;
+                    }
+                    for c in root.cards: Card {
+                        card: c;
+                        switch-account(id, delta, wheel) => { root.switch-account(id, delta, wheel); }
+                        refresh => { root.refresh(); }
+                    }
+                }
+
+                if root.settings-open: VerticalLayout {
+                    spacing: 9px;
+                    alignment: start;
+                    if root.settings-error != "": SettingsErrorBanner {
+                        text: root.settings-error;
+                    }
+                    ManageProvidersCard {
+                        clicked => { root.open-providers(); }
+                    }
+                    Text {
+                        text: L10n.general;
+                        font-size: 11.3px;
+                        font-weight: 700;
+                        color: Theme.text-secondary;
+                    }
+                    GeneralCard {
+                        autostart: root.autostart;
+                        alerts-enabled: root.alerts-enabled;
+                        toggle-autostart(v) => { root.toggle-autostart(v); }
+                        toggle-alerts(v) => { root.toggle-alerts(v); }
+                        test-alert => { root.test-alert(); }
+                        set-lang(code) => { root.set-lang(code); }
+                        set-theme(code) => { root.set-theme(code); }
+                    }
+                    Text {
+                        text: L10n.shortcuts-title;
+                        font-size: 11.3px;
+                        font-weight: 700;
+                        color: Theme.text-secondary;
+                    }
+                    ShortcutsCard { }
+                }
+            }
+        }
+
+        Rectangle { height: 9px; }
+
+        PanelFooter {
+            settings-open: root.settings-open;
+            status-text: root.status-text;
+            status-color: root.status-color;
+        }
+    }
+}
+
+component CostBarRow inherits HorizontalLayout {
+    in property <string> label;
+    in property <string> usd-text;
+    in property <float> ratio;
+    in property <length> label-width;
+    in property <color> tint;
+
+    height: 24px;
+    spacing: 12px;
+    cross-axis-alignment: center;
+
+    Text {
+        width: root.label-width;
+        text: root.label;
+        font-size: 12px;
+        color: Theme.text-muted;
+        vertical-alignment: center;
+        overflow: elide;
+    }
+    Rectangle {
+        height: Theme.bar-height;
+        horizontal-stretch: 1;
+        background: Theme.track;
+        border-radius: Theme.bar-radius;
+        clip: true;
+
+        Rectangle {
+            x: 0px;
+            width: Math.max(4px, parent.width * Math.clamp(root.ratio, 0.0, 1.0));
+            height: parent.height;
+            border-radius: Theme.bar-radius;
+            background: root.tint;
+        }
+    }
+    Text {
+        width: 64px;
+        text: root.usd-text;
+        font-size: 12px;
+        font-weight: 600;
+        color: Theme.text-secondary;
+        horizontal-alignment: right;
+        vertical-alignment: center;
+        overflow: elide;
+    }
+}
+
+component PerforatedDivider inherits Rectangle {
+    width: 24px;
+    clip: true;
+
+    Rectangle {
+        x: 0px;
+        y: 0px;
+        width: parent.width / 2;
+        height: parent.height;
+        background: Theme.bg;
+    }
+    Rectangle {
+        x: parent.width / 2;
+        y: 0px;
+        width: parent.width - parent.width / 2;
+        height: parent.height;
+        background: Theme.stub-bg;
+    }
+    Rectangle {
+        x: parent.width / 2 + 1px;
+        y: 12px;
+        width: 1px;
+        height: parent.height - 24px;
+        background: Theme.card-border;
+        opacity: 0.55;
+    }
+    dashes := Rectangle {
+        x: parent.width / 2 - 1px;
+        y: 14px;
+        width: 2px;
+        height: max(0px, parent.height - 28px);
+        clip: true;
+
+        VerticalLayout {
+            spacing: 7px;
+            alignment: start;
+            for _ in Math.ceil(dashes.height / 14px): Rectangle {
+                width: 2px;
+                height: 7px;
+                border-radius: 1px;
+                background: Theme.perf-dash;
+            }
+        }
+    }
+}
+
+export component AppWindow inherits Window {
+    title: "QPeek";
+    icon: @image-url("../assets/qpeek-64.png");
+    no-frame: true;
+    background: Theme.bg;
+    default-font-family: Theme.font-family;
+    width: 1410px;
+    height: 810px;
+    forward-focus: keys;
+
+    in property <[ProviderCard]> cards;
+    in property <bool> refreshing: false;
+    in property <string> status-text;
+    in property <color> status-color;
+    in property <string> empty-text;
+
+    in property <[ProviderListRow]> provider-list;
+    in property <ProviderDetail> selected-provider;
+    in property <bool> has-selection;
+    in property <bool> has-providers;
+    in property <int> total-provider-count;
+    in property <int> connected-provider-count;
+    in property <bool> settings-loading;
+    in property <string> settings-error;
+    in property <bool> autostart;
+    in property <bool> alerts-enabled;
+    in property <bool> act-master-enabled;
+    in property <int> act-master-mode;
+    in property <string> act-master-time;
+    in property <bool> act-master-quiet-enabled;
+    in property <string> act-master-quiet-start;
+    in property <string> act-master-quiet-end;
+    in property <int> cost-days: 30;
+    in property <bool> cost-loading: false;
+    in property <string> cost-error: "";
+    in property <string> cost-total-usd: "$0.00";
+    in property <string> cost-total-tokens: "0";
+    in property <string> cost-total-sessions: "0";
+    in property <[CostProviderRow]> cost-providers: [];
+    in property <[CostDailyRow]> cost-daily: [];
+    in-out property <int> settings-tab: 0;
+    in-out property <string> search-text: "";
+    in-out property <int> filter-mode: 0;
+    in-out property <string> api-key-draft: "";
+
+    callback refresh();
+    callback select-cost-days(int);
+    callback refresh-cost();
+    callback dismiss();
+    callback switch-account(string, int, bool);
+    callback search-changed(string);
+    callback set-filter(int);
+    callback select-provider(string);
+    callback account-action(string, string, bool);
+    callback add-account(string);
+    callback toggle-provider(string, bool);
+    callback save-api-key(string, string);
+    callback toggle-autostart(bool);
+    callback toggle-alerts(bool);
+    callback test-alert();
+    callback set-lang(string);
+    callback set-theme(string);
+    callback act-set-master-enabled(bool);
+    callback act-set-master-mode(int);
+    callback act-step-master-time(int);
+    callback act-set-master-quiet-enabled(bool);
+    callback act-step-master-quiet-start(int);
+    callback act-step-master-quiet-end(int);
+    callback act-set-account-enabled(string, string, bool);
+    callback act-set-account-follow(string, string, bool);
+    callback act-set-account-mode(string, string, int);
+    callback act-step-account-time(string, string, int);
+    callback act-set-account-quiet(string, string, bool);
+    callback act-step-account-quiet-start(string, string, int);
+    callback act-step-account-quiet-end(string, string, int);
+    callback act-trigger-now(string, string);
+
+    property <string> active-provider-id: root.has-selection ? root.selected-provider.id : "";
+    changed active-provider-id => { root.api-key-draft = ""; }
+
+    TouchArea {
+        pointer-event(ev) => {
+            if ev.kind == PointerEventKind.down && ev.button == PointerEventButton.right {
+                root.refresh();
+            }
+        }
+    }
+
+    keys := FocusScope {
+        capture-key-pressed(ev) => {
+            if ev.text == Key.Escape {
+                root.dismiss();
+                return accept;
+            }
+            reject
+        }
+
+        HorizontalLayout {
+            spacing: 0px;
+
+            Rectangle {
+                horizontal-stretch: 1;
+                background: Theme.bg;
+
+                VerticalLayout {
+                    padding-left: 16px;
+                    padding-right: 12px;
+                    padding-top: 14px;
+                    padding-bottom: 12px;
+                    spacing: 0px;
+
+                    HorizontalLayout {
+                        height: 32px;
+                        spacing: 10px;
+                        cross-axis-alignment: center;
+
+                        Image {
+                            width: 22px;
+                            height: 22px;
+                            source: Theme.is-light ? @image-url("../assets/qpeek-mark-light.svg") : @image-url("../assets/qpeek-mark.svg");
+                        }
+                        Text {
+                            text: "QPeek";
+                            horizontal-stretch: 1;
+                            font-size: 15.5px;
+                            font-weight: 700;
+                            color: Theme.text-primary;
+                            vertical-alignment: center;
+                        }
+                        Rectangle {
+                            width: 330px;
+                            height: 30px;
+                            border-radius: Theme.control-radius;
+                            background: Theme.card;
+                            border-width: Theme.border-w;
+                            border-color: Theme.card-border;
+
+                            HorizontalLayout {
+                                padding: 2px;
+                                spacing: 4px;
+
+                                TabButton {
+                                    label: L10n.providers-tab;
+                                    active: root.settings-tab == 0;
+                                    clicked => {
+                                        keys.focus();
+                                        root.settings-tab = 0;
+                                    }
+                                }
+                                TabButton {
+                                    label: L10n.cost-tab;
+                                    active: root.settings-tab == 1;
+                                    clicked => {
+                                        keys.focus();
+                                        root.settings-tab = 1;
+                                    }
+                                }
+                                TabButton {
+                                    label: L10n.general;
+                                    active: root.settings-tab == 2;
+                                    clicked => {
+                                        keys.focus();
+                                        root.settings-tab = 2;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    Rectangle { height: 12px; }
+
+                    if root.settings-error != "": SettingsErrorBanner {
+                        text: root.settings-error;
+                    }
+                    if root.settings-error != "": Rectangle { height: 10px; }
+
+                    if root.settings-tab == 0: HorizontalLayout {
+                        vertical-stretch: 1;
+                        spacing: 10px;
+
+                        ProviderSidebar {
+                            width: 280px;
+                            provider-list: root.provider-list;
+                            total-provider-count: root.total-provider-count;
+                            connected-provider-count: root.connected-provider-count;
+                            loading: root.settings-loading;
+                            search-text <=> root.search-text;
+                            filter-mode: root.filter-mode;
+                            search-changed(query) => { root.search-changed(query); }
+                            set-filter(mode) => { root.set-filter(mode); }
+                            select-provider(id) => { root.select-provider(id); }
+                        }
+
+                        ProviderDetailPane {
+                            horizontal-stretch: 1;
+                            provider: root.selected-provider;
+                            has-selection: root.has-selection;
+                            loading: root.settings-loading && !root.has-providers;
+                            api-key-draft <=> root.api-key-draft;
+                            account-action(id, key, connect) => { root.account-action(id, key, connect); }
+                            add-account(id) => { root.add-account(id); }
+                            toggle-provider(id, on) => { root.toggle-provider(id, on); }
+                            save-api-key(id, key) => { root.save-api-key(id, key); }
+                            act-set-account-enabled(id, key, on) => { root.act-set-account-enabled(id, key, on); }
+                            act-set-account-follow(id, key, on) => { root.act-set-account-follow(id, key, on); }
+                            act-set-account-mode(id, key, mode) => { root.act-set-account-mode(id, key, mode); }
+                            act-step-account-time(id, key, delta) => { root.act-step-account-time(id, key, delta); }
+                            act-set-account-quiet(id, key, on) => { root.act-set-account-quiet(id, key, on); }
+                            act-step-account-quiet-start(id, key, delta) => { root.act-step-account-quiet-start(id, key, delta); }
+                            act-step-account-quiet-end(id, key, delta) => { root.act-step-account-quiet-end(id, key, delta); }
+                            act-trigger-now(id, key) => { root.act-trigger-now(id, key); }
+                        }
+                    }
+
+                    if root.settings-tab == 1: cost-pane := VerticalLayout {
+                        property <bool> has-data: root.cost-providers.length > 0;
+                        property <bool> initial-loading: root.cost-loading && !self.has-data;
+                        property <bool> has-error: !self.initial-loading && root.cost-error != "";
+
+                        vertical-stretch: 1;
+                        spacing: 14px;
+
+                        HorizontalLayout {
+                            height: 32px;
+                            spacing: 8px;
+                            cross-axis-alignment: center;
+
+                            FilterChip {
+                                label: L10n.cost-1d;
+                                active: root.cost-days == 1;
+                                clicked => { root.select-cost-days(1); }
+                            }
+                            FilterChip {
+                                label: L10n.cost-7d;
+                                active: root.cost-days == 7;
+                                clicked => { root.select-cost-days(7); }
+                            }
+                            FilterChip {
+                                label: L10n.cost-30d;
+                                active: root.cost-days == 30;
+                                clicked => { root.select-cost-days(30); }
+                            }
+                            Rectangle { horizontal-stretch: 1; }
+                            RefreshButton {
+                                refreshing: root.cost-loading;
+                                clicked => { root.refresh-cost(); }
+                            }
+                        }
+
+                        if !cost-pane.has-data || cost-pane.has-error: VerticalLayout {
+                            vertical-stretch: 1;
+                            alignment: center;
+
+                            HorizontalLayout {
+                                alignment: center;
+                                if cost-pane.has-error: SettingsErrorBanner {
+                                    width: 480px;
+                                    text: root.cost-error;
+                                }
+                                if !cost-pane.has-error: EmptyCard {
+                                    width: 480px;
+                                    text: cost-pane.initial-loading ? L10n.cost-loading : L10n.cost-empty;
+                                }
+                            }
+                        }
+
+                        if cost-pane.has-data && !cost-pane.has-error: Flickable {
+                            vertical-stretch: 1;
+                            content-width: self.width;
+                            content-height: Math.max(self.height, cost-content.preferred-height);
+                            changed content-height => {
+                                self.content-y = Math.clamp(self.content-y, self.height - self.content-height, 0px);
+                            }
+
+                            cost-content := VerticalLayout {
+                                width: parent.width;
+                                spacing: 14px;
+                                alignment: start;
+
+                                Rectangle {
+                                    border-radius: Theme.card-radius;
+                                    background: Theme.card;
+                                    border-width: Theme.border-w;
+                                    border-color: Theme.card-border;
+
+                                    VerticalLayout {
+                                        padding: 20px;
+                                        spacing: 12px;
+
+                                        HorizontalLayout {
+                                            spacing: 16px;
+                                            cross-axis-alignment: center;
+
+                                            VerticalLayout {
+                                                horizontal-stretch: 1;
+                                                spacing: 4px;
+                                                Text {
+                                                    text: L10n.cost-total;
+                                                    font-size: 13px;
+                                                    font-weight: 700;
+                                                    color: Theme.text-secondary;
+                                                }
+                                                Text {
+                                                    text: root.cost-total-usd;
+                                                    font-size: 38px;
+                                                    font-weight: 700;
+                                                    color: Theme.text-primary;
+                                                    overflow: elide;
+                                                }
+                                            }
+                                            Badge {
+                                                height: 24px;
+                                                text: root.cost-total-tokens + " " + L10n.cost-tokens;
+                                            }
+                                            Badge {
+                                                height: 24px;
+                                                text: root.cost-total-sessions + " " + L10n.cost-sessions;
+                                            }
+                                        }
+                                        Rectangle { height: Theme.border-w; background: Theme.card-border; }
+                                        Text {
+                                            text: L10n.cost-note;
+                                            font-size: 12px;
+                                            color: Theme.text-muted;
+                                            wrap: word-wrap;
+                                        }
+                                    }
+                                }
+
+                                if root.cost-daily.length > 0: Rectangle {
+                                    border-radius: Theme.card-radius;
+                                    background: Theme.card;
+                                    border-width: Theme.border-w;
+                                    border-color: Theme.card-border;
+
+                                    VerticalLayout {
+                                        padding: 20px;
+                                        spacing: 8px;
+
+                                        Text {
+                                            text: L10n.cost-daily-title;
+                                            font-size: 14px;
+                                            font-weight: 700;
+                                            color: Theme.text-primary;
+                                        }
+                                        VerticalLayout {
+                                            spacing: 2px;
+                                            for d in root.cost-daily: CostBarRow {
+                                                label: d.label;
+                                                label-width: 48px;
+                                                usd-text: d.usd-text;
+                                                ratio: d.ratio;
+                                                tint: Theme.accent;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                for p in root.cost-providers: Rectangle {
+                                    border-radius: Theme.card-radius;
+                                    background: Theme.card;
+                                    border-width: Theme.border-w;
+                                    border-color: Theme.card-border;
+
+                                    VerticalLayout {
+                                        padding: 20px;
+                                        spacing: 12px;
+
+                                        HorizontalLayout {
+                                            spacing: 12px;
+                                            cross-axis-alignment: center;
+
+                                            ProviderIconBadge {
+                                                size: 36px;
+                                                logo: p.logo;
+                                                has-logo: p.has-logo;
+                                                monogram: p.monogram;
+                                                accent: p.accent;
+                                                font-size: 13px;
+                                                background: Theme.monogram-bg;
+                                                border-width: Theme.border-w;
+                                            }
+                                            VerticalLayout {
+                                                horizontal-stretch: 1;
+                                                spacing: 3px;
+                                                Text {
+                                                    text: p.name;
+                                                    font-size: 15px;
+                                                    font-weight: 700;
+                                                    color: Theme.text-primary;
+                                                    overflow: elide;
+                                                }
+                                                Text {
+                                                    text: p.meta-text;
+                                                    font-size: 12px;
+                                                    color: Theme.text-muted;
+                                                    overflow: elide;
+                                                }
+                                            }
+                                            Text {
+                                                text: p.total-text;
+                                                font-size: 20px;
+                                                font-weight: 700;
+                                                color: Theme.text-primary;
+                                                horizontal-alignment: right;
+                                                vertical-alignment: center;
+                                            }
+                                        }
+
+                                        if p.models.length > 0: VerticalLayout {
+                                            spacing: 8px;
+                                            Rectangle { height: Theme.border-w; background: Theme.card-border; }
+                                            Text {
+                                                text: L10n.cost-models-title;
+                                                font-size: 12px;
+                                                font-weight: 700;
+                                                color: Theme.text-secondary;
+                                            }
+                                            VerticalLayout {
+                                                spacing: 2px;
+                                                for m in p.models: CostBarRow {
+                                                    label: m.model;
+                                                    label-width: 220px;
+                                                    usd-text: m.usd-text;
+                                                    ratio: m.ratio;
+                                                    tint: p.accent;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    if root.settings-tab == 2: Flickable {
+                        vertical-stretch: 1;
+                        content-width: self.width;
+                        content-height: max(self.height, general-col.preferred-height);
+                        changed content-height => {
+                            self.content-y = clamp(self.content-y, self.height - self.content-height, 0px);
+                        }
+
+                        general-col := VerticalLayout {
+                            width: parent.width;
+                            spacing: 9px;
+                            alignment: start;
+
+                            Text {
+                                text: L10n.general;
+                                font-size: 11.3px;
+                                font-weight: 700;
+                                color: Theme.text-secondary;
+                            }
+                            GeneralCard {
+                                autostart: root.autostart;
+                                alerts-enabled: root.alerts-enabled;
+                                toggle-autostart(v) => { root.toggle-autostart(v); }
+                                toggle-alerts(v) => { root.toggle-alerts(v); }
+                                test-alert => { root.test-alert(); }
+                                set-lang(code) => { root.set-lang(code); }
+                                set-theme(code) => { root.set-theme(code); }
+                            }
+                            Text {
+                                text: L10n.activation-title;
+                                font-size: 11.3px;
+                                font-weight: 700;
+                                color: Theme.text-secondary;
+                            }
+                            MasterActivationCard {
+                                enabled: root.act-master-enabled;
+                                mode: root.act-master-mode;
+                                start-time: root.act-master-time;
+                                quiet-enabled: root.act-master-quiet-enabled;
+                                quiet-start: root.act-master-quiet-start;
+                                quiet-end: root.act-master-quiet-end;
+                                toggle-enabled(on) => { root.act-set-master-enabled(on); }
+                                set-mode(mode) => { root.act-set-master-mode(mode); }
+                                step-time(delta) => { root.act-step-master-time(delta); }
+                                toggle-quiet(on) => { root.act-set-master-quiet-enabled(on); }
+                                step-quiet-start(delta) => { root.act-step-master-quiet-start(delta); }
+                                step-quiet-end(delta) => { root.act-step-master-quiet-end(delta); }
+                            }
+                            Text {
+                                text: L10n.shortcuts-title;
+                                font-size: 11.3px;
+                                font-weight: 700;
+                                color: Theme.text-secondary;
+                            }
+                            ShortcutsCard { }
+                        }
+                    }
+
+                    Rectangle { height: 8px; }
+
+                    Text {
+                        height: 18px;
+                        text: L10n.app-settings-footer;
+                        font-size: 10px;
+                        color: Theme.text-dim;
+                        horizontal-alignment: center;
+                        vertical-alignment: center;
+                    }
+                }
+            }
+
+            PerforatedDivider { width: 24px; }
+
+            Rectangle {
+                width: 470px;
+                background: Theme.stub-bg;
+
+                VerticalLayout {
+                    padding-left: 12px;
+                    padding-right: 16px;
+                    padding-top: 14px;
+                    padding-bottom: 12px;
+                    spacing: 0px;
+
+                    HorizontalLayout {
+                        height: 32px;
+                        spacing: 8px;
+                        cross-axis-alignment: center;
+
+                        Text {
+                            text: L10n.limits-title;
+                            font-size: 14px;
+                            font-weight: 700;
+                            color: Theme.text-primary;
+                            horizontal-stretch: 1;
+                            vertical-alignment: center;
+                        }
+                        RefreshButton {
+                            refreshing: root.refreshing;
+                            clicked => { root.refresh(); }
+                        }
+                    }
+
+                    Rectangle { height: 12px; }
+
+                    Flickable {
+                        vertical-stretch: 1;
+                        content-width: self.width;
+                        content-height: max(self.height, right-cards-col.preferred-height);
+                        changed content-height => {
+                            self.content-y = clamp(self.content-y, self.height - self.content-height, 0px);
+                        }
+
+                        right-cards-col := VerticalLayout {
+                            width: parent.width;
+                            spacing: 9px;
+                            alignment: start;
+
+                            if root.cards.length == 0: EmptyCard {
+                                text: root.empty-text;
+                            }
+                            for c in root.cards: Card {
+                                card: c;
+                                switch-account(id, delta, wheel) => { root.switch-account(id, delta, wheel); }
+                                refresh => { root.refresh(); }
+                            }
+                        }
+                    }
+
+                    Rectangle { height: 8px; }
+
+                    PanelFooter {
+                        settings-open: false;
+                        status-text: root.status-text;
+                        status-color: root.status-color;
+                    }
+                }
+            }
+        }
+    }
+}
