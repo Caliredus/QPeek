@@ -135,6 +135,7 @@ mod tests {
                 pace_level: 0,
                 info: false,
                 window_minutes: Some(300),
+                resets_at: None,
             }],
             failed: false,
         }

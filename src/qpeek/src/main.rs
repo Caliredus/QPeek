@@ -7,6 +7,7 @@ mod backend;
 mod i18n;
 mod icon;
 mod notify;
+mod snapshot;
 mod theme;
 #[cfg(windows)]
 mod win;
@@ -1433,6 +1434,8 @@ fn spawn_refresher(requests: Receiver<()>, bus: EventBus) {
     std::thread::spawn(move || loop {
         bus.send(AppEvent::Update(Update::Started));
         let result = backend::fetch();
+        // Ajanlar için son okuma; yazılamazsa panel etkilenmez.
+        let _ = snapshot::write(&result, REFRESH_EVERY.as_secs());
         bus.send(AppEvent::Update(Update::Done(result)));
         match requests.recv_timeout(REFRESH_EVERY) {
             Ok(()) | Err(mpsc::RecvTimeoutError::Timeout) => while requests.try_recv().is_ok() {},
@@ -2210,6 +2213,7 @@ mod tests {
                 pace_level: 0,
                 info: false,
                 window_minutes: Some(300),
+                resets_at: None,
             }],
             failed: false,
         }
