@@ -146,6 +146,8 @@ pub struct Metric {
     pub pace_level: i32,
     pub info: bool,
     pub window_minutes: Option<u64>,
+    /// Pencerenin sıfırlanma anı (çekirdekten geldiyse); limits.json'a yazılır.
+    pub resets_at: Option<DateTime<Utc>>,
 }
 
 impl Metric {
@@ -461,6 +463,7 @@ fn error_card(provider: &str, msg_tr: String, msg_en: String) -> Card {
             pace_level: 0,
             info: true,
             window_minutes: None,
+            resets_at: None,
         }],
         failed: true,
     }
@@ -689,6 +692,7 @@ fn metric(
             pace_level: 0,
             info: true,
             window_minutes: None,
+            resets_at: None,
         };
     }
     let (pace_tr, pace_en, pace_level) = pace
@@ -706,6 +710,7 @@ fn metric(
         pace_level,
         info: false,
         window_minutes: w.window_minutes,
+        resets_at: w.resets_at,
     }
 }
 

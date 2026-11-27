@@ -223,7 +223,7 @@ pub fn login(provider: &str) -> Result<(), String> {
         if has_login(provider, &dir) { Ok(()) } else { Err("Giriş bilgisi kaydedilmedi".into()) }
     })();
     if result.is_err() {
-        remove_dir_safely(provider, &dir);
+        let _ = remove_dir_safely(&dir);
     }
     result
 }
@@ -231,22 +231,33 @@ pub fn login(provider: &str) -> Result<(), String> {
 /// Ek hesabı kaldırır: yalnız QPeek'in kendi hesap klasörünü siler.
 pub fn remove_extra(provider: &str, key: &str) -> Result<(), String> {
     let base = root().ok_or("Uygulama klasörü bulunamadı")?.join(provider);
-    let dir = base.join(key);
-    if key.is_empty() || key.contains(['/', '\\', '.']) || !dir.is_dir() {
+    if !is_safe_key(key) {
         return Err("Hesap bulunamadı".into());
     }
-    remove_dir_safely(provider, &dir);
+    let dir = base.join(key);
+    if !dir.is_dir() {
+        return Err("Hesap bulunamadı".into());
+    }
+    remove_dir_safely(&dir).map_err(|e| format!("Hesap klasörü silinemedi: {e}"))?;
     if dir.exists() { Err("Hesap klasörü silinemedi".into()) } else { Ok(()) }
 }
 
-/// Yalnız `%APPDATA%\QPeek\accounts\<sağlayıcı>\` altındaki bir klasörü siler.
-fn remove_dir_safely(provider: &str, dir: &Path) {
-    let Some(base) = root().map(|r| r.join(provider)) else { return };
-    if let (Ok(base), Ok(dir)) = (base.canonicalize(), dir.canonicalize())
-        && dir.parent() == Some(base.as_path())
-    {
-        let _ = std::fs::remove_dir_all(dir);
+/// Klasör adı tek bir düz bileşen olmalı (ayraç, nokta, sürücü harfi yok).
+fn is_safe_key(key: &str) -> bool {
+    !key.is_empty() && !key.contains(['/', '\\', '.', ':'])
+}
+
+/// `%APPDATA%\QPeek\accounts\<sağlayıcı>\<anahtar>` klasörünü siler.
+/// Yol `is_safe_key` ile kurulduğu için kapsam dışına çıkamaz. `canonicalize` karşılaştırması
+/// kullanılmaz: paketli (MSIX) bir süreçten başlatılınca AppData sanallaştırılır ve taban ile
+/// alt klasör farklı gerçek yollara çözülür; eski kontrol bu yüzden silmeyi sessizce atlıyordu.
+/// Bağlantı (symlink/junction) ise içine girilmez, yalnız bağlantının kendisi kaldırılır.
+fn remove_dir_safely(dir: &Path) -> std::io::Result<()> {
+    let meta = std::fs::symlink_metadata(dir)?;
+    if meta.file_type().is_symlink() {
+        return std::fs::remove_dir(dir);
     }
+    std::fs::remove_dir_all(dir)
 }
 
 #[cfg(test)]
@@ -259,5 +270,23 @@ mod tests {
         let payload = "eyJlbWFpbCI6ImFAYi5jIn0";
         let bytes = base64url_decode(payload).unwrap();
         assert_eq!(std::str::from_utf8(&bytes).unwrap(), r#"{"email":"a@b.c"}"#);
+    }
+
+    #[test]
+    fn safe_key_rejects_paths() {
+        assert!(is_safe_key("1a20d6dff69"));
+        for bad in ["", "..", "a/b", "a\\b", "C:x", ".hidden"] {
+            assert!(!is_safe_key(bad), "{bad}");
+        }
+    }
+
+    #[test]
+    fn removes_account_dir_with_nested_files() {
+        let dir = std::env::temp_dir().join(format!("qpeek-rm-test-{}", std::process::id()));
+        std::fs::create_dir_all(dir.join("tmp").join("arg0")).unwrap();
+        std::fs::write(dir.join("auth.json"), "{}").unwrap();
+        std::fs::write(dir.join("tmp").join("arg0").join(".lock"), "").unwrap();
+        remove_dir_safely(&dir).unwrap();
+        assert!(!dir.exists());
     }
 }

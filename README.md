@@ -27,6 +27,7 @@ QPeek/
 - **Burn Rate (`Pace`):** Subtle color-coded pace tags beneath quota bars (`Calm` / `On track` / `Fast` / `Burning`) parsed directly from `usage --json` with zero extra CLI calls.
 - **Local Cost (`Cost` / `Maliyet`) tab:** Scans local Codex & Claude Code session logs (`codexbar-cli cost -p both --days <1|7|30> --format json`) to show API-equivalent USD value, tokens, sessions, daily spend bars, and per-model breakdown.
 - **Limit Activation (Auto 5h Starter):** Master schedule + Quiet Hours + per-account `Follow master` or custom schedule for accounts with a 5-hour rolling window (`Codex`, `Claude`, `Antigravity`), firing silent ephemeral pings with a `4h 55m` cooldown guard.
+- **Limits snapshot for agents & scripts (`%LOCALAPPDATA%\QPeek\limits.json`):** After every refresh (every 5 min), QPeek writes all connected accounts with provider, email, plan, per-window used/remaining percent and reset time (`schema: 1`, atomic temp-file + rename). Tools can read live quotas from this file instead of querying providers themselves.
 - **Windows 11 Toast notifications & i18n:** 80% / 100% / reset threshold alerts, `Ctrl+Alt+Q` global shortcut, Windows startup (`--tray`), and live Turkish / English (`TR` / `EN`) switching.
 
 ## Building
